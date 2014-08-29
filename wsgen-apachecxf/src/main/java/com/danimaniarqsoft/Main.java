@@ -15,8 +15,5 @@ public class Main {
 
 	public static void main(String[] args) {
 		LOG.info("Plantilla para una aplicación java empaquetada en un jar");
-		LOG.debug("Plantilla para una aplicación java empaquetada en un jar");
-		LOG.warn("Plantilla para una aplicación java empaquetada en un jar");
-		LOG.error("Plantilla para una aplicación java empaquetada en un jar");
 	}
 }
