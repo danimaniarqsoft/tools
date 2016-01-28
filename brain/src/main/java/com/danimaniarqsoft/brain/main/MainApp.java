@@ -1,4 +1,4 @@
-package com.danimaniarqsoft;
+package com.danimaniarqsoft.brain.main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

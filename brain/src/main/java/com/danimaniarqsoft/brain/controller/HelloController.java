@@ -1,4 +1,4 @@
-package com.danimaniarqsoft;
+package com.danimaniarqsoft.brain.controller;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
