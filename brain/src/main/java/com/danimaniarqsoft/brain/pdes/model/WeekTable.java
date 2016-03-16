@@ -1,6 +1,7 @@
 package com.danimaniarqsoft.brain.pdes.model;
 
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -55,7 +56,13 @@ public class WeekTable {
   }
 
   private double getDoubleValue(String cad) {
-    if (cad == null || cad.equals("")) {
+    cad = cad.replaceAll("\\s", "");
+    int nbsp = -1;
+    if (!cad.isEmpty()) {
+      nbsp = cad.charAt(0);
+    }
+
+    if (cad == null || cad.equals("") || cad.isEmpty() || nbsp == 160) {
       return 0.0;
     }
     return Double.parseDouble(cad);
