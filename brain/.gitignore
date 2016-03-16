@@ -23,4 +23,5 @@ hs_err_pid*
 dependency-reduced-pom.xml
 test-output/
 .gitignore.swp
-../apachecxf-client-archetype/.classpath
+../apachecxf-client-archetype/.settings/*
+.classpath
