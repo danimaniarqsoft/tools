@@ -1,15 +1,11 @@
 package com.danimaniarqsoft.brain.pdes.model;
 
 import java.io.IOException;
-import java.util.stream.IntStream;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import com.danimaniarqsoft.brain.main.DateCalculator;
-import com.danimaniarqsoft.brain.pdes.model.Column;
-import com.danimaniarqsoft.brain.pdes.model.Row;
 
 public class WeekTable {
   private final static String URL       =
