@@ -19,3 +19,8 @@ hs_err_pid*
 .project
 */.settings
 /target/
+.settings/
+dependency-reduced-pom.xml
+test-output/
+.gitignore.swp
+../apachecxf-client-archetype/.classpath
