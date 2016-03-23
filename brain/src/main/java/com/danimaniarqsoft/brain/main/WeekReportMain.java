@@ -1,7 +1,6 @@
 package com.danimaniarqsoft.brain.main;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 import com.danimaniarqsoft.brain.pdes.service.PersonalReportService;
@@ -16,13 +15,13 @@ import com.danimaniarqsoft.brain.util.UrlContext;
  */
 public class WeekReportMain {
 
-  public static void main(String[] args)
-      throws NumberFormatException, URISyntaxException, IOException {
-    UrlContext context = ContextUtil.getUrlContext();
+  public static void main(String[] args) {
     try {
+      UrlContext context = ContextUtil.getUrlContext();
       new PersonalReportService().createReport(context);
-    } catch (ReportException e) {
+    } catch (ReportException | IOException e) {
       ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT);
     }
+    System.out.println("Done");
   }
 }

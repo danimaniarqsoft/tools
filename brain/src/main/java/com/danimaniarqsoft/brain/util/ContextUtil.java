@@ -16,11 +16,10 @@ public class ContextUtil {
     file = new FileInputStream(path);
     mainProperties.load(file);
     file.close();
-    UrlContext urlCtx = new UrlContext();
-    urlCtx.setHost(Constants.PDES_CLIENT_HOST_NAME);
-    urlCtx.setScheme(Constants.PDES_SCHEME);
-    urlCtx.setPort(mainProperties.getProperty(Constants.PROPERTY_PORT));
-    urlCtx.setProjectName(mainProperties.getProperty(Constants.PROPERTY_PROJECT));
+    UrlContext urlCtx = UrlContext.createUrl().withHost(Constants.PDES_CLIENT_HOST_NAME)
+        .withScheme(Constants.PDES_SCHEME)
+        .withPort(mainProperties.getProperty(Constants.PROPERTY_PORT))
+        .withProjectName(mainProperties.getProperty(Constants.PROPERTY_PROJECT));
     return urlCtx;
   }
 
@@ -45,8 +44,6 @@ public class ContextUtil {
       fop.flush();
       fop.close();
 
-      System.out.println("Done");
-
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
@@ -58,13 +55,13 @@ public class ContextUtil {
         e.printStackTrace();
       }
     }
-
   }
-  
-  public static void saveExceptionToDisk(Throwable e, String fileName){
+
+  public static void saveExceptionToDisk(Throwable e, String fileName) {
     StringWriter sw = new StringWriter();
     PrintWriter pw = new PrintWriter(sw);
     e.printStackTrace(pw);
-    saveToDisk(new StringBuilder(sw.toString()), fileName);
+    saveToDisk(new StringBuilder("Please send this log to: daniel.cortes@infotec.mx").append("\n\n")
+        .append(sw.toString()), fileName);
   }
 }
