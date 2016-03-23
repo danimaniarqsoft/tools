@@ -24,7 +24,7 @@ public class WeekReportTest {
         project + "//reports/week.class", "tl=auto&labelFilterAuto=t&pathFilterAuto=t", null);
 
     // String URL = readFile("test.html", Charset.defaultCharset());
-    String report = new WeekReport().createReport(uri.toString());
+//    String report = new WeekReport().createReport(uri.toString());
   }
 
   private static String readFile(String resource, Charset encoding)

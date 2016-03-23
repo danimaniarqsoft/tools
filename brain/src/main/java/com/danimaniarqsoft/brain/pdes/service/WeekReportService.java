@@ -1,4 +1,4 @@
-package com.danimaniarqsoft.brain.pdes.model;
+package com.danimaniarqsoft.brain.pdes.service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -6,11 +6,12 @@ import java.net.URI;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-public class WeekReport {
-  public String createReport(final URI uri) throws IOException {
+import com.danimaniarqsoft.brain.pdes.model.WeekTable;
+
+public class WeekReportService {
+  public static StringBuilder createReport(final URI uri) throws IOException {
     Document doc = Jsoup.connect(uri.toString()).get();
     WeekTable table = new WeekTable(doc);
-
     String vg = table.getProperty(1, 4) + "% " + "Diferencia = "
         + (table.getProperty(1, 4) - table.getProperty(1, 3)) + " Falta :"
         + ((1 - table.getProperty(1, 5)) * 100 + "%");
@@ -34,8 +35,7 @@ public class WeekReport {
         .append("\n");
     sb.append(String.format("%-40s : %-20s ", "VG/H", vhxH)).append("\n");
     sb.append(String.format("%-40s : %-20s ", "VG no realizado", vgNoRe)).append("\n");
-    sb.append(String.format("%-40s : %-20s ", "Recuperaci�n", recup)).append("\n");
-    return null;
+    sb.append(String.format("%-40s : %-20s ", "Recuperacion", recup)).append("\n");
+    return sb;
   }
-
 }
