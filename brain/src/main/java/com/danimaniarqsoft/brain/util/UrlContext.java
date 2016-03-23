@@ -2,14 +2,19 @@ package com.danimaniarqsoft.brain.util;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import org.apache.http.client.utils.URIUtils;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 
+/**
+ * UrlContext Class used to Create the Url context for create the reports.
+ * 
+ * @author Daniel Cortes Pichardo
+ *
+ */
 public class UrlContext {
-  private String scheme;
+  private String scheme; 
   private String host;
   private String port;
   private String projectName;
@@ -49,56 +54,58 @@ public class UrlContext {
 
   public URI getEvImageUrl() throws ReportException {
     try {
-      return URIUtils.createURI(scheme, host, Integer.parseInt(port),
-          projectName + "//reports/ev.class",
-          "tl=auto&labelFilterAuto=t&pathFilterAuto=t&charts&showChart=pdash.ev.cumValueChart",
-          null);
-    } catch (NumberFormatException | URISyntaxException e) {
+      return getUrlReport("cumValueChart");
+    } catch (NumberFormatException e) {
       throw new ReportException("getEvImageUrl", e);
     }
   }
 
+
   public URI getInProgressTaskUrl() throws ReportException {
     try {
-      return URIUtils.createURI(scheme, host, Integer.parseInt(port),
-          projectName + "//reports/ev.class",
-          "tl=auto&labelFilterAuto=t&pathFilterAuto=t&charts&showChart=pdash.ev.tasksInProgressDiscChart",
-          null);
-    } catch (NumberFormatException | URISyntaxException e) {
+      return getUrlReport("tasksInProgressDiscChart");
+    } catch (NumberFormatException e) {
       throw new ReportException("getInProgressTaskUrl", e);
     }
   }
 
   public URI getDirectHoursUrl() throws ReportException {
     try {
-      return URIUtils.createURI(scheme, host, Integer.parseInt(port),
-          projectName + "//reports/ev.class",
-          "tl=auto&labelFilterAuto=t&pathFilterAuto=t&charts&showChart=pdash.ev.cumDirectTimeChart",
-          null);
-    } catch (NumberFormatException | URISyntaxException e) {
+      return getUrlReport("cumDirectTimeChart");
+    } catch (NumberFormatException e) {
       throw new ReportException("getDirectHoursUrl", e);
     }
   }
 
   public URI getEarnedValueTrendUrl() throws ReportException {
     try {
-      return URIUtils.createURI(scheme, host, Integer.parseInt(port),
-          projectName + "//reports/ev.class",
-          "tl=auto&labelFilterAuto=t&pathFilterAuto=t&charts&showChart=pdash.ev.valueTrendChart",
-          null);
-    } catch (NumberFormatException | URISyntaxException e) {
+      return getUrlReport("valueTrendChart");
+    } catch (NumberFormatException e) {
       throw new ReportException("getEarnedValueTrendUrl", e);
     }
   }
 
   public URI getDirectTimeTrendUrl() throws ReportException {
     try {
-      return URIUtils.createURI(scheme, host, Integer.parseInt(port),
-          projectName + "//reports/ev.class",
-          "tl=auto&labelFilterAuto=t&pathFilterAuto=t&charts&showChart=pdash.ev.timeTrendChart",
-          null);
-    } catch (NumberFormatException | URISyntaxException e) {
+      return getUrlReport("timeTrendChart");
+    } catch (NumberFormatException e) {
       throw new ReportException("getDirectTimeTrendUrl", e);
+    }
+  }
+
+  public URI getExternalCommitmentsUrl() throws ReportException {
+    try {
+      return getUrlReport("commitChart");
+    } catch (NumberFormatException e) {
+      throw new ReportException("getExternalCommitmentsUrl", e);
+    }
+  }
+
+  public URI getMilestonesUrl() throws ReportException {
+    try {
+      return getUrlReport("milestonesChart");
+    } catch (NumberFormatException e) {
+      throw new ReportException("getMilestonesUrl", e);
     }
   }
 
@@ -120,25 +127,12 @@ public class UrlContext {
     }
   }
 
-  public URI getExternalCommitmentsUrl() throws ReportException {
+  private URI getUrlReport(String reportName) throws ReportException {
     try {
       return URIUtils.createURI(scheme, host, Integer.parseInt(port),
-          projectName + "//reports/ev.class",
-          "tl=auto&labelFilterAuto=t&pathFilterAuto=t&charts&showChart=pdash.ev.commitChart", null);
+          projectName + Constants.REPORT_EV_URL, Constants.REPORT_EV_QUERY + reportName, null);
     } catch (NumberFormatException | URISyntaxException e) {
-      throw new ReportException("getExternalCommitmentsUrl", e);
+      throw new ReportException("getUrlReport", e);
     }
   }
-
-  public URI getMilestonesUrl() throws ReportException {
-    try {
-      return URIUtils.createURI(scheme, host, Integer.parseInt(port),
-          projectName + "//reports/ev.class",
-          "tl=auto&labelFilterAuto=t&pathFilterAuto=t&charts&showChart=pdash.ev.milestonesChart",
-          null);
-    } catch (NumberFormatException | URISyntaxException e) {
-      throw new ReportException("getMilestonesUrl", e);
-    }
-  }
-
 }
