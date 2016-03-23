@@ -63,6 +63,18 @@ public class PersonalReportService extends AbstractReportTemplate {
     locateResource(context.getDefectsUrl().toString(), "body p img", "defects", context);
   }
 
+  @Override
+  protected void locateExternalCommitmentsImage(UrlContext context) throws ReportException {
+    locateResource(context.getExternalCommitmentsUrl().toString(), "body .evChartItem img",
+        "externalCommitments", context);
+  }
+
+  @Override
+  protected void locateMilestonesImage(UrlContext context) throws ReportException {
+    locateResource(context.getMilestonesUrl().toString(), "body .evChartItem img", "milestones",
+        context);
+  }
+
   private void locateResource(final String contextUrl, final String xPathQuery,
       final String fileName, UrlContext context) {
     try {

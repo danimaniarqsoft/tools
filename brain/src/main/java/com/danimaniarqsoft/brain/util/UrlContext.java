@@ -120,4 +120,25 @@ public class UrlContext {
     }
   }
 
+  public URI getExternalCommitmentsUrl() throws ReportException {
+    try {
+      return URIUtils.createURI(scheme, host, Integer.parseInt(port),
+          projectName + "//reports/ev.class",
+          "tl=auto&labelFilterAuto=t&pathFilterAuto=t&charts&showChart=pdash.ev.commitChart", null);
+    } catch (NumberFormatException | URISyntaxException e) {
+      throw new ReportException("getExternalCommitmentsUrl", e);
+    }
+  }
+
+  public URI getMilestonesUrl() throws ReportException {
+    try {
+      return URIUtils.createURI(scheme, host, Integer.parseInt(port),
+          projectName + "//reports/ev.class",
+          "tl=auto&labelFilterAuto=t&pathFilterAuto=t&charts&showChart=pdash.ev.milestonesChart",
+          null);
+    } catch (NumberFormatException | URISyntaxException e) {
+      throw new ReportException("getMilestonesUrl", e);
+    }
+  }
+
 }

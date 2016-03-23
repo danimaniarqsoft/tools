@@ -18,7 +18,12 @@ public abstract class AbstractReportTemplate {
   protected abstract void locateInProgressTaskImage(UrlContext context) throws ReportException;
   
   protected abstract void locateDefectImages(UrlContext context) throws ReportException;
-
+  
+  protected abstract void locateExternalCommitmentsImage(UrlContext context) throws ReportException;
+  
+  protected abstract void locateMilestonesImage(UrlContext context) throws ReportException;
+  
+  
   public void createReport(UrlContext context) throws ReportException {
     createWeekReport(context);
     locateEvImage(context);
@@ -27,5 +32,7 @@ public abstract class AbstractReportTemplate {
     locateDirectTimeTrendImage(context);
     locateInProgressTaskImage(context);
     locateDefectImages(context);
+    locateExternalCommitmentsImage(context);
+    locateMilestonesImage(context);
   }
 }
