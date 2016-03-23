@@ -1,5 +1,6 @@
 package com.danimaniarqsoft.brain.util;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,6 +8,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
+
+import javax.imageio.ImageIO;
 
 public class ContextUtil {
   public static UrlContext getUrlContext() throws IOException {
@@ -24,13 +27,14 @@ public class ContextUtil {
   }
 
   public static void saveToDisk(StringBuilder sb, String dataFile) {
+    new File(Constants.REPORT_FOLDER).mkdir();
     FileOutputStream fop = null;
     File file;
     String content = sb.toString();
 
     try {
 
-      file = new File(dataFile);
+      file = new File(Constants.REPORT_FOLDER+"/" + dataFile);
       fop = new FileOutputStream(file);
       // if file doesnt exists, then create it
       if (!file.exists()) {
@@ -55,6 +59,11 @@ public class ContextUtil {
         e.printStackTrace();
       }
     }
+  }
+
+  public static void saveImageToDisk(BufferedImage image, String fileName) throws IOException {
+    ImageIO.write(image, Constants.EXTENSION_PNG,
+        new File(Constants.REPORT_FOLDER+"/" + fileName + "." + Constants.EXTENSION_PNG));
   }
 
   public static void saveExceptionToDisk(Throwable e, String fileName) {

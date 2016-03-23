@@ -15,5 +15,6 @@ public class Constants {
   public static final String FILE_ERROR_TXT        = "./error.txt";
   public static final String ATTR_SRC              = "src";
   public static final String EXTENSION_PNG         = "png";
+  public static final String REPORT_FOLDER         = "weekReport";
 
 }

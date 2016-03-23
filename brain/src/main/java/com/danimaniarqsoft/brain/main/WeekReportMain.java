@@ -22,6 +22,7 @@ public class WeekReportMain {
     } catch (ReportException | IOException e) {
       ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT);
     }
-    System.out.println("Done");
+    System.out.println(
+        "Thanks for using danimaniarqsoft solutions, visit my web page at www.danimanicp.com for futher news");
   }
 }

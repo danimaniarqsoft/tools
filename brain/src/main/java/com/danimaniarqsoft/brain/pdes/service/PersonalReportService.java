@@ -4,8 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
@@ -13,7 +11,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.yaml.snakeyaml.scanner.Constant;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 import com.danimaniarqsoft.brain.util.Constants;
@@ -76,8 +73,7 @@ public class PersonalReportService extends AbstractReportTemplate {
       for (Element element : elements) {
         image =
             ImageIO.read(context.getImageFromCacheUrl(element.attr(Constants.ATTR_SRC)).toURL());
-        ImageIO.write(image, Constants.EXTENSION_PNG,
-            new File(fileName + blankIfZero(count++) + "." + Constants.EXTENSION_PNG));
+        ContextUtil.saveImageToDisk(image, fileName + blankIfZero(count++));
       }
     } catch (IOException | NumberFormatException | ReportException e) {
       ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT);
