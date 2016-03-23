@@ -15,6 +15,10 @@ import com.danimaniarqsoft.brain.util.UrlContext;
  */
 public class WeekReportMain {
 
+  private WeekReportMain() {
+    
+  }
+
   public static void main(String[] args) {
     try {
       UrlContext context = ContextUtil.getUrlContext();

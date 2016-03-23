@@ -1,7 +1,6 @@
 package com.danimaniarqsoft.brain.pdes.service;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -17,6 +16,11 @@ import com.danimaniarqsoft.brain.util.Constants;
 import com.danimaniarqsoft.brain.util.ContextUtil;
 import com.danimaniarqsoft.brain.util.UrlContext;
 
+/**
+ * 
+ * @author Daniel Cortes Pichardo
+ *
+ */
 public class PersonalReportService extends AbstractReportTemplate {
 
   @Override
@@ -36,25 +40,25 @@ public class PersonalReportService extends AbstractReportTemplate {
 
   @Override
   protected void locateInProgressTaskImage(UrlContext context) throws ReportException {
-    locateResource(context.getInProgressTaskUrl().toString(), "body .evChartItem img",
+    locateResource(context.getInProgressTaskUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
         "inPogressTasks", context);
   }
 
   @Override
   protected void locateCumDirectTimeImage(UrlContext context) throws ReportException {
-    locateResource(context.getDirectHoursUrl().toString(), "body .evChartItem img", "directHours",
-        context);
+    locateResource(context.getDirectHoursUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
+        "directHours", context);
   }
 
   @Override
   protected void locateEvTrendImage(UrlContext context) throws ReportException {
-    locateResource(context.getEarnedValueTrendUrl().toString(), "body .evChartItem img", "evTrend",
-        context);
+    locateResource(context.getEarnedValueTrendUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
+        "evTrend", context);
   }
 
   @Override
   protected void locateDirectTimeTrendImage(UrlContext context) throws ReportException {
-    locateResource(context.getDirectTimeTrendUrl().toString(), "body .evChartItem img",
+    locateResource(context.getDirectTimeTrendUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
         "directTimeTrend", context);
   }
 
@@ -65,14 +69,14 @@ public class PersonalReportService extends AbstractReportTemplate {
 
   @Override
   protected void locateExternalCommitmentsImage(UrlContext context) throws ReportException {
-    locateResource(context.getExternalCommitmentsUrl().toString(), "body .evChartItem img",
+    locateResource(context.getExternalCommitmentsUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
         "externalCommitments", context);
   }
 
   @Override
   protected void locateMilestonesImage(UrlContext context) throws ReportException {
-    locateResource(context.getMilestonesUrl().toString(), "body .evChartItem img", "milestones",
-        context);
+    locateResource(context.getMilestonesUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
+        "milestones", context);
   }
 
   private void locateResource(final String contextUrl, final String xPathQuery,
@@ -80,7 +84,7 @@ public class PersonalReportService extends AbstractReportTemplate {
     try {
       Document doc = Jsoup.connect(contextUrl).get();
       Elements elements = doc.select(xPathQuery);
-      BufferedImage image = null;
+      BufferedImage image;
       int count = 0;
       for (Element element : elements) {
         image =
@@ -92,12 +96,11 @@ public class PersonalReportService extends AbstractReportTemplate {
     }
   }
 
-  private String blankIfZero(int val) {
+  private static String blankIfZero(int val) {
     if (val == 0) {
       return "";
     } else {
-      return "" + val;
+      return Integer.toString(val);
     }
   }
-
 }

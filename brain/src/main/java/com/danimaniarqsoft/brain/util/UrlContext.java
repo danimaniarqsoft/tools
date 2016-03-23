@@ -14,7 +14,7 @@ import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
  *
  */
 public class UrlContext {
-  private String scheme; 
+  private String scheme;
   private String host;
   private String port;
   private String projectName;
@@ -47,7 +47,7 @@ public class UrlContext {
     return this;
   }
 
-  public URI getWeekReportUrl() throws NumberFormatException, URISyntaxException {
+  public URI getWeekReportUrl() throws URISyntaxException {
     return URIUtils.createURI(scheme, host, Integer.parseInt(port),
         projectName + "//reports/week.class", "tl=auto&labelFilterAuto=t&pathFilterAuto=t", null);
   }

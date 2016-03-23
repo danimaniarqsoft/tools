@@ -12,6 +12,10 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 
 public class ContextUtil {
+  private ContextUtil() {
+    
+  }
+
   public static UrlContext getUrlContext() throws IOException {
     Properties mainProperties = new Properties();
     FileInputStream file;
@@ -19,11 +23,10 @@ public class ContextUtil {
     file = new FileInputStream(path);
     mainProperties.load(file);
     file.close();
-    UrlContext urlCtx = UrlContext.createUrl().withHost(Constants.PDES_CLIENT_HOST_NAME)
+    return UrlContext.createUrl().withHost(Constants.PDES_CLIENT_HOST_NAME)
         .withScheme(Constants.PDES_SCHEME)
         .withPort(mainProperties.getProperty(Constants.PROPERTY_PORT))
         .withProjectName(mainProperties.getProperty(Constants.PROPERTY_PROJECT));
-    return urlCtx;
   }
 
   public static void saveToDisk(StringBuilder sb, String dataFile) {
@@ -34,7 +37,7 @@ public class ContextUtil {
 
     try {
 
-      file = new File(Constants.REPORT_FOLDER+"/" + dataFile);
+      file = new File(Constants.REPORT_FOLDER + "/" + dataFile);
       fop = new FileOutputStream(file);
       // if file doesnt exists, then create it
       if (!file.exists()) {
@@ -49,21 +52,21 @@ public class ContextUtil {
       fop.close();
 
     } catch (IOException e) {
-      e.printStackTrace();
+      saveExceptionToDisk(e, "error.txt");
     } finally {
       try {
         if (fop != null) {
           fop.close();
         }
       } catch (IOException e) {
-        e.printStackTrace();
+        saveExceptionToDisk(e, "error.txt");
       }
     }
   }
 
   public static void saveImageToDisk(BufferedImage image, String fileName) throws IOException {
     ImageIO.write(image, Constants.EXTENSION_PNG,
-        new File(Constants.REPORT_FOLDER+"/" + fileName + "." + Constants.EXTENSION_PNG));
+        new File(Constants.REPORT_FOLDER + "/" + fileName + "." + Constants.EXTENSION_PNG));
   }
 
   public static void saveExceptionToDisk(Throwable e, String fileName) {
