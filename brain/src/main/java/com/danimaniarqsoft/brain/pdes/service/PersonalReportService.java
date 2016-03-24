@@ -12,6 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
+import com.danimaniarqsoft.brain.pdes.model.Report;
 import com.danimaniarqsoft.brain.util.Constants;
 import com.danimaniarqsoft.brain.util.ContextUtil;
 import com.danimaniarqsoft.brain.util.UrlContext;
@@ -26,8 +27,9 @@ public class PersonalReportService extends AbstractReportTemplate {
   @Override
   protected void createWeekReport(UrlContext context) throws ReportException {
     try {
-      StringBuilder sb = WeekReportService.createReport(context.getWeekReportUrl());
-      ContextUtil.saveToDisk(sb, Constants.FILE_WEEKDATA_TXT);
+      Report report = WeekReportService.createReport(context.getWeekReportUrl());
+      HtmlTemplateService.saveHtmlReport(report);
+      // ContextUtil.saveToDisk(sb, Constants.FILE_WEEKDATA_TXT);
     } catch (NumberFormatException | IOException | URISyntaxException e) {
       throw new ReportException("createWeekReport", e);
     }
