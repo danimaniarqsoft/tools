@@ -10,11 +10,23 @@ import com.danimaniarqsoft.brain.pdes.model.PerformanceTable;
 import com.danimaniarqsoft.brain.pdes.model.Report;
 import com.danimaniarqsoft.brain.pdes.model.WeekTable;
 
+/**
+ * WeekReportService
+ * 
+ * @author Daniel Cortes Pichardo
+ *
+ */
 public class WeekReportService {
   private WeekReportService() {
 
   }
 
+  /**
+   * 
+   * @param uri
+   * @return
+   * @throws IOException
+   */
   public static Report createReport(final URI uri) throws IOException {
     Document doc = Jsoup.connect(uri.toString()).get();
     WeekTable table = new WeekTable(doc);

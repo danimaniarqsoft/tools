@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 
 public class ContextUtil {
   private ContextUtil() {
-    
+
   }
 
   public static UrlContext getUrlContext() throws IOException {
@@ -65,8 +65,9 @@ public class ContextUtil {
   }
 
   public static void saveImageToDisk(BufferedImage image, String fileName) throws IOException {
+    new File(Constants.REPORT_IMG_FOLDER).mkdirs();
     ImageIO.write(image, Constants.EXTENSION_PNG,
-        new File(Constants.REPORT_FOLDER + "/" + fileName + "." + Constants.EXTENSION_PNG));
+        new File(Constants.REPORT_IMG_FOLDER + "/" + fileName + "." + Constants.EXTENSION_PNG));
   }
 
   public static void saveExceptionToDisk(Throwable e, String fileName) {
