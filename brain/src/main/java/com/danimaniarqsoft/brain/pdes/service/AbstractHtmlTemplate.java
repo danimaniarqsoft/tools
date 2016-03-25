@@ -25,6 +25,8 @@ public abstract class AbstractHtmlTemplate {
 
   protected abstract void createMilestonesFile(Report report) throws ReportException;
 
+  protected abstract void createWebSite(Report report) throws ReportException;
+
 
 
   public void saveHtmlReport(Report report) throws ReportException {
@@ -39,6 +41,7 @@ public abstract class AbstractHtmlTemplate {
     createTaskProgressFile(report);
     createDefectFile(report);
     createSupportFile(report);
+    createWebSite(report);
   }
 
 }

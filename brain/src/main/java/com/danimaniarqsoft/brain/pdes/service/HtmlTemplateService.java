@@ -10,6 +10,7 @@ import com.danimaniarqsoft.brain.pdes.model.PerformanceTable;
 import com.danimaniarqsoft.brain.pdes.model.Report;
 import com.danimaniarqsoft.brain.util.Constants;
 import com.danimaniarqsoft.brain.util.TemplateUtil;
+import com.danimaniarqsoft.brain.util.ZipUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -44,7 +45,8 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
 
   @Override
   protected void createExternalCommitmentsFile(Report report) throws ReportException {
-    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "extCommitmentsChart.html");
+    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
+        "extCommitmentsChart.html");
   }
 
   @Override
@@ -54,7 +56,8 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
 
   @Override
   protected void createTaskProgressFile(Report report) throws ReportException {
-    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "taskProgressChart.html");
+    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
+        "taskProgressChart.html");
 
 
   }
@@ -93,8 +96,12 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
 
   @Override
   protected void createMilestonesFile(Report report) throws ReportException {
-    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "milestonesChart.html");
+    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
+        "milestonesChart.html");
   }
 
-
+  @Override
+  protected void createWebSite(Report report) throws ReportException {
+    ZipUtils.extract("/site/site.zip", new File("weekReport"));
+  }
 }
