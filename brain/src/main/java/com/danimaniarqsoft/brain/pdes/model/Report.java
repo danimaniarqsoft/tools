@@ -9,8 +9,10 @@ public class Report {
 
   private WeekTable        weekTable;
   private PerformanceTable performanceTable;
+  private GeneralTable     generalTable;
 
-  public Report(WeekTable weekTable, PerformanceTable performanceTable) {
+  public Report(GeneralTable gTable, WeekTable weekTable, PerformanceTable performanceTable) {
+    this.generalTable = gTable;
     this.weekTable = weekTable;
     this.performanceTable = performanceTable;
   }
@@ -33,6 +35,14 @@ public class Report {
 
   public void setWeekTable(WeekTable weekTable) {
     this.weekTable = weekTable;
+  }
+
+  public GeneralTable getGeneralTable() {
+    return generalTable;
+  }
+
+  public void setGeneralTable(GeneralTable generalTable) {
+    this.generalTable = generalTable;
   }
 
 }

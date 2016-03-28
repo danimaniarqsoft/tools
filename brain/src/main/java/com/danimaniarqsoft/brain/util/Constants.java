@@ -21,6 +21,9 @@ public class Constants {
   public static final String OUTPUT_FORMAT         = "%-40s : %-20s ";
   public static final String BODY_EVCHARITEM_IMG   = "body .evChartItem img";
 
+  public final static String DATE_FORMAT_PATTERN   = "dd/MM/yyyy";
+  public static final String PDES_DATE_FORMAT_PATTERN = "MM/dd/yy";
+
   private Constants() {
 
   }

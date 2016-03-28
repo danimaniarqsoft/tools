@@ -30,7 +30,9 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
     try {
       new File(Constants.REPORT_FOLDER).mkdir();
       mainTemplate = cfg.getTemplate("templates/mainLayout.html");
-      TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "index.html");
+      HashMap<String, Object> data = new HashMap<String, Object>();
+      data.put("gn", report.getGeneralTable());
+      TemplateUtil.saveTemplate(mainTemplate, cfg, data, "index.html");
     } catch (IOException e) {
       throw new ReportException("createIndexFile", e);
     }

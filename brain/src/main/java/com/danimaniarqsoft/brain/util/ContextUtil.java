@@ -126,4 +126,15 @@ public class ContextUtil {
     return jarFolder + resourceName;
   }
 
+  public static String computeStatus(String vgDiffs) {
+    int vgDiff = new Double(vgDiffs).intValue();
+    if (vgDiff == 0) {
+      return "En Tiempo";
+    } else if (vgDiff < 0) {
+      return "Atrasado";
+    } else {
+      return "Adelantado";
+    }
+  }
+
 }

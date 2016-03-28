@@ -2,13 +2,18 @@ package com.danimaniarqsoft.brain.pdes.service;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
+import com.danimaniarqsoft.brain.pdes.model.GeneralTable;
 import com.danimaniarqsoft.brain.pdes.model.PerformanceTable;
 import com.danimaniarqsoft.brain.pdes.model.Report;
 import com.danimaniarqsoft.brain.pdes.model.WeekTable;
+import com.danimaniarqsoft.brain.util.ContextUtil;
+import com.danimaniarqsoft.brain.util.DateUtils;
 
 /**
  * WeekReportService
@@ -30,6 +35,15 @@ public class WeekReportService {
   public static Report createReport(final URI uri) throws IOException {
     Document doc = Jsoup.connect(uri.toString()).get();
     WeekTable table = new WeekTable(doc);
+    Element element = doc.select("body table tbody tr td.left").get(1);
+    String parse = element.text();
+    String toDateReportString = DateUtils.convertPdesDate(DateUtils.extractDate(parse));
+    Date toDateReportDate = DateUtils.convertStringToDate(toDateReportString);
+    Date fromDateReportDate = DateUtils.moveDays(toDateReportDate, -8);
+    Document mainData = Jsoup.connect("http://localhost:2468/dads_strategy2016//cms/TSP/indiv_plan_summary?frame=content").get();
+    GeneralTable gTable = new GeneralTable(mainData);
+    gTable.setReportedPeriod("Del " + DateUtils.convertDateToString(fromDateReportDate) + " al "
+        + DateUtils.convertDateToString(toDateReportDate));
 
     String vg = computeVg(table);
     String vgDiff = computeVgDiff(table);
@@ -48,7 +62,9 @@ public class WeekReportService {
         .withVgPerHour(Double.toString(vhxH)).withVgNotPerformed(vgNoRe).withRecovery(recup)
         .build();
 
-    return new Report(table, pTable);
+    // Otros calculos
+    gTable.setStatus(ContextUtil.computeStatus(vgDiff));
+    return new Report(gTable, table, pTable);
   }
 
 
