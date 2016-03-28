@@ -52,6 +52,11 @@ public class UrlContext {
         projectName + "//reports/week.class", "tl=auto&labelFilterAuto=t&pathFilterAuto=t", null);
   }
 
+  public URI getGeneralReportUrl() throws NumberFormatException, URISyntaxException {
+    return URIUtils.createURI(scheme, host, Integer.parseInt(port),
+        projectName + "//cms/TSP/indiv_plan_summary", "frame=content", null);
+  }
+
   public URI getEvImageUrl() throws ReportException {
     try {
       return getUrlReport("cumValueChart");

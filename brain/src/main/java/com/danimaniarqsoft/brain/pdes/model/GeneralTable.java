@@ -25,8 +25,16 @@ public class GeneralTable {
     this.dateReport = DateUtils.convertDateToString(new Date());
     Element dateEndPlanned = elements.get(0).getAllElements().get(5);
     this.setDateEndPlanned(dateEndPlanned.text());
-    Element dateForecast = elements.get(0).getAllElements().get(278);;
-    this.setDateForecast(dateForecast.text());
+    this.setDateForecast(readForeCast(elements));
+  }
+
+  private static String readForeCast(Elements elements) {
+    try {
+      Element dateForecast = elements.get(0).getAllElements().get(278);
+      return dateForecast.text();
+    } catch (Exception e) {
+      return "No hay valores para estimar";
+    }
   }
 
   public String getDateReport() {

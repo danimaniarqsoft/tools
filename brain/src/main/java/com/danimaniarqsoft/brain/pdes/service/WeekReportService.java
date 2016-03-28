@@ -2,6 +2,7 @@ package com.danimaniarqsoft.brain.pdes.service;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 import org.jsoup.Jsoup;
@@ -14,6 +15,7 @@ import com.danimaniarqsoft.brain.pdes.model.Report;
 import com.danimaniarqsoft.brain.pdes.model.WeekTable;
 import com.danimaniarqsoft.brain.util.ContextUtil;
 import com.danimaniarqsoft.brain.util.DateUtils;
+import com.danimaniarqsoft.brain.util.UrlContext;
 
 /**
  * WeekReportService
@@ -31,16 +33,17 @@ public class WeekReportService {
    * @param uri
    * @return
    * @throws IOException
+   * @throws URISyntaxException
    */
-  public static Report createReport(final URI uri) throws IOException {
-    Document doc = Jsoup.connect(uri.toString()).get();
+  public static Report createReport(final UrlContext uri) throws IOException, URISyntaxException {
+    Document doc = Jsoup.connect(uri.getWeekReportUrl().toString()).get();
     WeekTable table = new WeekTable(doc);
     Element element = doc.select("body table tbody tr td.left").get(1);
     String parse = element.text();
     String toDateReportString = DateUtils.convertPdesDate(DateUtils.extractDate(parse));
     Date toDateReportDate = DateUtils.convertStringToDate(toDateReportString);
     Date fromDateReportDate = DateUtils.moveDays(toDateReportDate, -8);
-    Document mainData = Jsoup.connect("http://localhost:2468/dads_strategy2016//cms/TSP/indiv_plan_summary?frame=content").get();
+    Document mainData = Jsoup.connect(uri.getGeneralReportUrl().toString()).get();
     GeneralTable gTable = new GeneralTable(mainData);
     gTable.setReportedPeriod("Del " + DateUtils.convertDateToString(fromDateReportDate) + " al "
         + DateUtils.convertDateToString(toDateReportDate));

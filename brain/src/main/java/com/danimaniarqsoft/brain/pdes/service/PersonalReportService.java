@@ -27,7 +27,7 @@ public class PersonalReportService extends AbstractReportTemplate {
   @Override
   protected void createWeekReport(UrlContext context) throws ReportException {
     try {
-      Report report = WeekReportService.createReport(context.getWeekReportUrl());
+      Report report = WeekReportService.createReport(context);
       new HtmlTemplateService().saveHtmlReport(report);
     } catch (NumberFormatException | IOException | URISyntaxException e) {
       throw new ReportException("createWeekReport", e);
