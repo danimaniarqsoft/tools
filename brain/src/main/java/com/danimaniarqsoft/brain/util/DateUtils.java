@@ -36,10 +36,12 @@ import net.objectlab.kit.datecalc.joda.LocalDateKitCalculatorsFactory;
  */
 public class DateUtils {
 
-  private final static DateTimeFormatter DATE_TIME_FORMATTER =
+  private final static DateTimeFormatter DATE_TIME_FORMATTER    =
       DateTimeFormat.forPattern(Constants.DATE_FORMAT_PATTERN);
-  private final static DateTimeFormatter PDES_TIME_FORMATTER =
-      DateTimeFormat.forPattern(Constants.PDES_DATE_FORMAT_PATTERN);
+  private final static DateTimeFormatter PDES_EN_TIME_FORMATTER =
+      DateTimeFormat.forPattern(Constants.PDES_EN_DATE_FORMAT_PATTERN);
+  private final static DateTimeFormatter PDES_ES_TIME_FORMATTER =
+      DateTimeFormat.forPattern(Constants.PDES_ES_DATE_FORMAT_PATTERN);
 
   private DateUtils() {}
 
@@ -54,8 +56,8 @@ public class DateUtils {
    * Calculate the number of days between two Dates without consider Holidays and weekends.
    * 
    * @param from the initial date for the operation
-   * @param to the final date for the operation
    * @return the number of days between Dates.
+   * @param to the final date for the operation
    */
   public static int daysBetween(Date from, Date to) {
     LocalDate fromDate = new LocalDate(from);
@@ -129,7 +131,27 @@ public class DateUtils {
   }
 
   public static String convertPdesDate(String date) {
-    Date temp = PDES_TIME_FORMATTER.parseDateTime(date).toDate();
-    return convertDateToString(temp);
+    Date pdesDate = tryPdesEn(date);
+    if (pdesDate == null) {
+      pdesDate = tryPdesEs(date);
+    }
+    return convertDateToString(pdesDate);
+  }
+
+  public static Date tryPdesEn(String date) {
+    try {
+      return PDES_EN_TIME_FORMATTER.parseDateTime(date).toDate();
+    } catch (Exception e) {
+      return null;
+    }
+  }
+
+  public static Date tryPdesEs(String date) {
+    try {
+      return PDES_ES_TIME_FORMATTER.parseDateTime(date).toDate();
+    } catch (Exception e) {
+      return null;
+    }
+
   }
 }

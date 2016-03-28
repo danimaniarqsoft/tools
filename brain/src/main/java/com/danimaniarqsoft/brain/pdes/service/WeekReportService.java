@@ -42,7 +42,7 @@ public class WeekReportService {
     String parse = element.text();
     String toDateReportString = DateUtils.convertPdesDate(DateUtils.extractDate(parse));
     Date toDateReportDate = DateUtils.convertStringToDate(toDateReportString);
-    Date fromDateReportDate = DateUtils.moveDays(toDateReportDate, -8);
+    Date fromDateReportDate = DateUtils.moveDays(toDateReportDate, -6);
     Document mainData = Jsoup.connect(uri.getGeneralReportUrl().toString()).get();
     GeneralTable gTable = new GeneralTable(mainData);
     gTable.setReportedPeriod("Del " + DateUtils.convertDateToString(fromDateReportDate) + " al "
