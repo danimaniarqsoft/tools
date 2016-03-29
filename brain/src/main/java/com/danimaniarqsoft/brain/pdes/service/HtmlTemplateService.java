@@ -1,6 +1,5 @@
 package com.danimaniarqsoft.brain.pdes.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,10 +17,27 @@ import freemarker.template.Version;
 public class HtmlTemplateService extends AbstractHtmlTemplate {
   private static Configuration cfg = null;
   private static Template      mainTemplate;
+  private static HtmlTemplateService instance = null;
 
   static {
     cfg = new Configuration(new Version("2.3.0"));
     cfg.setClassForTemplateLoading(HtmlTemplateService.class, "/");
+  }
+  
+
+  private HtmlTemplateService() {
+
+  }
+
+  public static HtmlTemplateService getInstance() {
+    if (instance == null) {
+      synchronized (HtmlTemplateService.class) {
+        if (instance == null) {
+          instance = new HtmlTemplateService();
+        }
+      }
+    }
+    return instance;
   }
 
   @Override

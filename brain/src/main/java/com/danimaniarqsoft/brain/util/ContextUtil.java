@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
+import com.danimaniarqsoft.brain.pdes.service.context.ReportContext;
+import com.google.gson.Gson;
 
 public class ContextUtil {
 
@@ -147,4 +149,13 @@ public class ContextUtil {
     }
   }
 
+  public static void saveJsonFormat(ReportContext context) {
+    try {
+      Gson gson = new Gson();
+      String json = gson.toJson(context);
+      saveToDisk(new StringBuilder(json), "data.brain", context.getOutputFile());
+    } catch (Exception e) {
+      LOGGER.error("JSON - ERROR: ", e);
+    }
+  }
 }
