@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 import com.danimaniarqsoft.brain.pdes.model.PerformanceTable;
-import com.danimaniarqsoft.brain.pdes.model.Report;
+import com.danimaniarqsoft.brain.pdes.service.context.ReportContext;
 import com.danimaniarqsoft.brain.util.TemplateUtil;
 import com.danimaniarqsoft.brain.util.ZipUtils;
 
@@ -25,89 +25,88 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
   }
 
   @Override
-  protected void createIndexFile(Report report) throws ReportException {
+  protected void createIndexFile(ReportContext context) throws ReportException {
     try {
       mainTemplate = cfg.getTemplate("templates/mainLayout.html");
       HashMap<String, Object> data = new HashMap<String, Object>();
-      data.put("gn", report.getGeneralTable());
-      TemplateUtil.saveTemplate(mainTemplate, cfg, data, "index.html", report.getOutputFile());
+      data.put("gn", context.getReport().getGeneralTable());
+      TemplateUtil.saveTemplate(mainTemplate, cfg, data, "index.html", context.getOutputFile());
     } catch (IOException e) {
       throw new ReportException("createIndexFile", e);
     }
-
-
   }
 
   @Override
-  protected void createDefectFile(Report report) throws ReportException {
+  protected void createDefectFile(ReportContext context) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "defectChart.html",
-        report.getOutputFile());
+        context.getOutputFile());
   }
 
   @Override
-  protected void createExternalCommitmentsFile(Report report) throws ReportException {
+  protected void createExternalCommitmentsFile(ReportContext context) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
-        "extCommitmentsChart.html", report.getOutputFile());
+        "extCommitmentsChart.html", context.getOutputFile());
   }
 
   @Override
-  protected void createHoursFile(Report report) throws ReportException {
+  protected void createHoursFile(ReportContext context) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "hrsChart.html",
-        report.getOutputFile());
+        context.getOutputFile());
   }
 
   @Override
-  protected void createTaskProgressFile(Report report) throws ReportException {
+  protected void createTaskProgressFile(ReportContext context) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
-        "taskProgressChart.html", report.getOutputFile());
+        "taskProgressChart.html", context.getOutputFile());
 
 
   }
 
   @Override
-  protected void createVgFile(Report report) throws ReportException {
+  protected void createVgFile(ReportContext context) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "vgChart.html",
-        report.getOutputFile());
+        context.getOutputFile());
 
   }
 
   @Override
-  protected void createWeekResumeFile(Report report) throws ReportException {
+  protected void createWeekResumeFile(ReportContext context) throws ReportException {
     Map<String, Object> templateData = new HashMap<String, Object>();
-    for (int i = 0; i < report.getWeekTable().getNumRows(); i++) {
-      for (int j = 0; j < report.getWeekTable().getNumCols(); j++) {
-        templateData.put("data" + i + "" + j, report.getWeekTable().getStringProperty(i, j));
+    for (int i = 0; i < context.getReport().getWeekTable().getNumRows(); i++) {
+      for (int j = 0; j < context.getReport().getWeekTable().getNumCols(); j++) {
+        templateData.put("data" + i + "" + j,
+            context.getReport().getWeekTable().getStringProperty(i, j));
       }
     }
     TemplateUtil.saveTemplate(mainTemplate, cfg, templateData, "weekResume.html",
-        report.getOutputFile());
+        context.getOutputFile());
 
   }
 
   @Override
-  protected void createSupportFile(Report report) throws ReportException {
+  protected void createSupportFile(ReportContext context) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "support.html",
-        report.getOutputFile());
+        context.getOutputFile());
 
   }
 
   @Override
-  protected void createPerformanceFile(Report report) throws ReportException {
-    PerformanceTable pt = report.getPerformanceTable();
+  protected void createPerformanceFile(ReportContext context) throws ReportException {
+    PerformanceTable pt = context.getReport().getPerformanceTable();
     Map<String, Object> templateData = new HashMap<String, Object>();
     templateData.put("pTable", pt);
     TemplateUtil.saveTemplate(mainTemplate, cfg, templateData, "performance.html",
-        report.getOutputFile());
+        context.getOutputFile());
   }
 
   @Override
-  protected void createMilestonesFile(Report report) throws ReportException {
+  protected void createMilestonesFile(ReportContext context) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
-        "milestonesChart.html", report.getOutputFile());
+        "milestonesChart.html", context.getOutputFile());
   }
 
   @Override
-  protected void createWebSite(Report report) throws ReportException {
-    ZipUtils.extract("/site/site.zip", new File("weekReport"));
+  protected void createWebSite(ReportContext context) throws ReportException {
+    ZipUtils.extract("/site/site.zip", context.getOutputFile());
   }
 }

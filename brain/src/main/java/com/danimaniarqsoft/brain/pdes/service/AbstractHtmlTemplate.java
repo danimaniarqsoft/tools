@@ -1,47 +1,48 @@
 package com.danimaniarqsoft.brain.pdes.service;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
-import com.danimaniarqsoft.brain.pdes.model.Report;
+import com.danimaniarqsoft.brain.pdes.service.context.ReportContext;
 
 public abstract class AbstractHtmlTemplate {
 
-  protected abstract void createIndexFile(Report report) throws ReportException;
+  protected abstract void createIndexFile(ReportContext context) throws ReportException;
 
-  protected abstract void createDefectFile(Report report) throws ReportException;
+  protected abstract void createDefectFile(ReportContext context) throws ReportException;
 
-  protected abstract void createExternalCommitmentsFile(Report report) throws ReportException;
+  protected abstract void createExternalCommitmentsFile(ReportContext context)
+      throws ReportException;
 
-  protected abstract void createHoursFile(Report Report) throws ReportException;
+  protected abstract void createHoursFile(ReportContext context) throws ReportException;
 
-  protected abstract void createTaskProgressFile(Report report) throws ReportException;
+  protected abstract void createTaskProgressFile(ReportContext context) throws ReportException;
 
-  protected abstract void createVgFile(Report Report) throws ReportException;
+  protected abstract void createVgFile(ReportContext context) throws ReportException;
 
-  protected abstract void createWeekResumeFile(Report report) throws ReportException;
+  protected abstract void createWeekResumeFile(ReportContext context) throws ReportException;
 
-  protected abstract void createSupportFile(Report report) throws ReportException;
+  protected abstract void createSupportFile(ReportContext context) throws ReportException;
 
-  protected abstract void createPerformanceFile(Report report) throws ReportException;
+  protected abstract void createPerformanceFile(ReportContext context) throws ReportException;
 
-  protected abstract void createMilestonesFile(Report report) throws ReportException;
+  protected abstract void createMilestonesFile(ReportContext context) throws ReportException;
 
-  protected abstract void createWebSite(Report report) throws ReportException;
+  protected abstract void createWebSite(ReportContext context) throws ReportException;
 
 
 
-  public void saveHtmlReport(Report report) throws ReportException {
-    createIndexFile(report);
-    createWeekResumeFile(report);
-    createPerformanceFile(report);
-    createVgFile(report);
-    createHoursFile(report);
-    createExternalCommitmentsFile(report);
-    createMilestonesFile(report);
-    createTaskProgressFile(report);
-    createTaskProgressFile(report);
-    createDefectFile(report);
-    createSupportFile(report);
-    createWebSite(report);
+  public void saveHtmlReport(ReportContext context) throws ReportException {
+    createIndexFile(context);
+    createWeekResumeFile(context);
+    createPerformanceFile(context);
+    createVgFile(context);
+    createHoursFile(context);
+    createExternalCommitmentsFile(context);
+    createMilestonesFile(context);
+    createTaskProgressFile(context);
+    createTaskProgressFile(context);
+    createDefectFile(context);
+    createSupportFile(context);
+    createWebSite(context);
   }
 
 }

@@ -13,36 +13,36 @@ import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
  * @author Daniel Cortes Pichardo
  *
  */
-public class UrlContext {
+public class UrlPd {
   private String scheme;
   private String host;
   private String port;
   private String projectName;
 
-  private UrlContext() {
+  private UrlPd() {
 
   }
 
-  public static UrlContext createUrl() {
-    return new UrlContext();
+  public static UrlPd createUrl() {
+    return new UrlPd();
   }
 
-  public UrlContext withScheme(String scheme) {
+  public UrlPd withScheme(String scheme) {
     this.scheme = scheme;
     return this;
   }
 
-  public UrlContext withHost(String host) {
+  public UrlPd withHost(String host) {
     this.host = host;
     return this;
   }
 
-  public UrlContext withPort(String port) {
+  public UrlPd withPort(String port) {
     this.port = port;
     return this;
   }
 
-  public UrlContext withProjectName(String projectName) {
+  public UrlPd withProjectName(String projectName) {
     this.projectName = projectName;
     return this;
   }

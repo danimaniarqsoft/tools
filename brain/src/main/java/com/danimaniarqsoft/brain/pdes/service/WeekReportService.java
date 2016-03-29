@@ -14,7 +14,7 @@ import com.danimaniarqsoft.brain.pdes.model.Report;
 import com.danimaniarqsoft.brain.pdes.model.WeekTable;
 import com.danimaniarqsoft.brain.util.ContextUtil;
 import com.danimaniarqsoft.brain.util.DateUtils;
-import com.danimaniarqsoft.brain.util.UrlContext;
+import com.danimaniarqsoft.brain.util.UrlPd;
 
 /**
  * WeekReportService
@@ -34,7 +34,7 @@ public class WeekReportService {
    * @throws IOException
    * @throws URISyntaxException
    */
-  public static Report createReport(final UrlContext uri) throws IOException, URISyntaxException {
+  public static Report createReport(final UrlPd uri) throws IOException, URISyntaxException {
     Document doc = Jsoup.connect(uri.getWeekReportUrl().toString()).get();
     WeekTable table = new WeekTable(doc);
     Element element = doc.select("body table tbody tr td.left").get(1);

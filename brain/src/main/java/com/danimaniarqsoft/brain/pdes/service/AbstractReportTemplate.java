@@ -1,30 +1,31 @@
 package com.danimaniarqsoft.brain.pdes.service;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
-import com.danimaniarqsoft.brain.util.UrlContext;
+import com.danimaniarqsoft.brain.pdes.service.context.ReportContext;
 
 public abstract class AbstractReportTemplate {
 
-  protected abstract void createWeekReport(UrlContext context) throws ReportException;
+  protected abstract void createWeekReport(ReportContext context) throws ReportException;
 
-  protected abstract void locateEvImage(UrlContext context) throws ReportException;
+  protected abstract void locateEvImage(ReportContext context) throws ReportException;
 
-  protected abstract void locateCumDirectTimeImage(UrlContext context) throws ReportException;
+  protected abstract void locateCumDirectTimeImage(ReportContext context) throws ReportException;
 
-  protected abstract void locateEvTrendImage(UrlContext context) throws ReportException;
+  protected abstract void locateEvTrendImage(ReportContext context) throws ReportException;
 
-  protected abstract void locateDirectTimeTrendImage(UrlContext context) throws ReportException;
+  protected abstract void locateDirectTimeTrendImage(ReportContext context) throws ReportException;
 
-  protected abstract void locateInProgressTaskImage(UrlContext context) throws ReportException;
-  
-  protected abstract void locateDefectImages(UrlContext context) throws ReportException;
-  
-  protected abstract void locateExternalCommitmentsImage(UrlContext context) throws ReportException;
-  
-  protected abstract void locateMilestonesImage(UrlContext context) throws ReportException;
-  
-  
-  public void createReport(UrlContext context) throws ReportException {
+  protected abstract void locateInProgressTaskImage(ReportContext context) throws ReportException;
+
+  protected abstract void locateDefectImages(ReportContext context) throws ReportException;
+
+  protected abstract void locateExternalCommitmentsImage(ReportContext context)
+      throws ReportException;
+
+  protected abstract void locateMilestonesImage(ReportContext context) throws ReportException;
+
+
+  public void createReport(ReportContext context) throws ReportException {
     createWeekReport(context);
     locateEvImage(context);
     locateCumDirectTimeImage(context);

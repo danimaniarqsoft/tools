@@ -13,27 +13,36 @@ import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 
 public class ContextUtil {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(ContextUtil.class);
+
   private ContextUtil() {
 
   }
 
-  public static UrlContext getUrlContext() throws IOException {
+  public static UrlPd getUrlContext() throws IOException {
     Properties mainProperties = new Properties();
     FileInputStream file;
     String path = Constants.FILE_PDES_PROPERTIES;
     file = new FileInputStream(path);
     mainProperties.load(file);
     file.close();
-    return UrlContext.createUrl().withHost(Constants.PDES_CLIENT_HOST_NAME)
+    return UrlPd.createUrl().withHost(Constants.PDES_CLIENT_HOST_NAME)
         .withScheme(Constants.PDES_SCHEME)
         .withPort(mainProperties.getProperty(Constants.PROPERTY_PORT))
         .withProjectName(mainProperties.getProperty(Constants.PROPERTY_PROJECT));
   }
 
   public static void saveToDisk(StringBuilder sb, String dataFile, File outputFile) {
+    if (!outputFile.exists()) {
+      outputFile.mkdirs();
+    }
     FileOutputStream fop = null;
     File file;
     String content = sb.toString();
@@ -42,12 +51,10 @@ public class ContextUtil {
 
       file = new File(outputFile, dataFile);
       fop = new FileOutputStream(file);
-      // if file doesnt exists, then create it
       if (!file.exists()) {
         file.createNewFile();
       }
 
-      // get the content in bytes
       byte[] contentInBytes = content.getBytes();
 
       fop.write(contentInBytes);
@@ -55,22 +62,26 @@ public class ContextUtil {
       fop.close();
 
     } catch (IOException e) {
-      saveExceptionToDisk(e, "error.txt", outputFile);
+      LOGGER.error("saveToDisk", e);
     } finally {
       try {
         if (fop != null) {
           fop.close();
         }
       } catch (IOException e) {
-        saveExceptionToDisk(e, "error.txt", outputFile);
+        LOGGER.error("saveToDisk", e);
       }
     }
   }
 
-  public static void saveImageToDisk(BufferedImage image, String fileName) throws IOException {
-    new File(Constants.REPORT_IMG_FOLDER).mkdirs();
-    ImageIO.write(image, Constants.EXTENSION_PNG,
-        new File(Constants.REPORT_IMG_FOLDER + "/" + fileName + "." + Constants.EXTENSION_PNG));
+  public static void saveImageToDisk(BufferedImage image, File outputFile, String fileName)
+      throws IOException {
+    File imageFolder = new File(outputFile, Constants.REPORT_IMG_FOLDER);
+    if (!imageFolder.exists()) {
+      imageFolder.mkdirs();
+    }
+    File imageFile = new File(imageFolder, fileName + "." + Constants.EXTENSION_PNG);
+    ImageIO.write(image, Constants.EXTENSION_PNG, imageFile);
   }
 
   public static void saveExceptionToDisk(Throwable e, String fileName, File outputFile) {

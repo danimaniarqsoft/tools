@@ -2,10 +2,14 @@ package com.danimaniarqsoft.brain.main;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.danimaniarqsoft.brain.pdes.service.PersonalReportService;
+import com.danimaniarqsoft.brain.pdes.service.context.ReportContext;
 import com.danimaniarqsoft.brain.util.Constants;
 import com.danimaniarqsoft.brain.util.ContextUtil;
-import com.danimaniarqsoft.brain.util.UrlContext;
+import com.danimaniarqsoft.brain.util.UrlPd;
 
 /*
  * WeekReportMain class execute the main app.
@@ -13,21 +17,22 @@ import com.danimaniarqsoft.brain.util.UrlContext;
  * @author Daniel Cortes Pichardo
  */
 public class WeekReportMain {
+  private static final Logger LOGGER = LoggerFactory.getLogger(WeekReportMain.class);
 
   private WeekReportMain() {
-
 
   }
 
   public static void main(String[] args) {
     try {
-      UrlContext context = ContextUtil.getUrlContext();
-      new PersonalReportService().createReport(context);
+      ReportContext context = new ReportContext();
+      UrlPd urlPd = ContextUtil.getUrlContext();
+      context.setUrlPd(urlPd);
+      PersonalReportService.getInstance().createReport(context);
     } catch (Exception e) {
-      File fileError = new File(Constants.FILE_ERROR_TXT);
-      ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT, fileError);
+      ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT, new File("./"));
     }
-    System.out.println(
+    LOGGER.info(
         "Thanks for using danimaniarqsoft solutions, visit my web page at www.danimanicp.com for futher news");
   }
 }

@@ -1,10 +1,8 @@
 package com.danimaniarqsoft.brain.pdes.service;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
 
@@ -15,10 +13,9 @@ import org.jsoup.select.Elements;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 import com.danimaniarqsoft.brain.pdes.model.Report;
+import com.danimaniarqsoft.brain.pdes.service.context.ReportContext;
 import com.danimaniarqsoft.brain.util.Constants;
 import com.danimaniarqsoft.brain.util.ContextUtil;
-import com.danimaniarqsoft.brain.util.DateUtils;
-import com.danimaniarqsoft.brain.util.UrlContext;
 
 /**
  * 
@@ -27,80 +24,94 @@ import com.danimaniarqsoft.brain.util.UrlContext;
  */
 public class PersonalReportService extends AbstractReportTemplate {
 
+
+  private static PersonalReportService instance = null;
+
+  private PersonalReportService() {
+
+  }
+
+  public static PersonalReportService getInstance() {
+    if (instance == null) {
+      synchronized (PersonalReportService.class) {
+        if (instance == null) {
+          instance = new PersonalReportService();
+        }
+      }
+    }
+    return instance;
+  }
+
   @Override
-  protected void createWeekReport(UrlContext context) throws ReportException {
+  protected void createWeekReport(ReportContext context) throws ReportException {
     try {
-      Report report = WeekReportService.createReport(context);
-      report.setOutputFile(createOutputFile());
-      new HtmlTemplateService().saveHtmlReport(report);
+      Report report = WeekReportService.createReport(context.getUrlPd());
+      context.setReport(report);
+      new HtmlTemplateService().saveHtmlReport(context);
     } catch (NumberFormatException | IOException | URISyntaxException e) {
       throw new ReportException("createWeekReport", e);
     }
   }
 
-  private static File createOutputFile() {
-    File outputFile = new File(Constants.REPORT_FOLDER + DateUtils.getDateFolderForma(new Date()));
-    outputFile.mkdirs();
-    return outputFile;
+  @Override
+  protected void locateEvImage(ReportContext context) throws ReportException {
+    locateResource(context.getUrlPd().getEvImageUrl().toString(), "body div div div img", "ev",
+        context);
   }
 
   @Override
-  protected void locateEvImage(UrlContext context) throws ReportException {
-    locateResource(context.getEvImageUrl().toString(), "body div div div img", "ev", context);
+  protected void locateInProgressTaskImage(ReportContext context) throws ReportException {
+    locateResource(context.getUrlPd().getInProgressTaskUrl().toString(),
+        Constants.BODY_EVCHARITEM_IMG, "inPogressTasks", context);
   }
 
   @Override
-  protected void locateInProgressTaskImage(UrlContext context) throws ReportException {
-    locateResource(context.getInProgressTaskUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
-        "inPogressTasks", context);
-  }
-
-  @Override
-  protected void locateCumDirectTimeImage(UrlContext context) throws ReportException {
-    locateResource(context.getDirectHoursUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
+  protected void locateCumDirectTimeImage(ReportContext context) throws ReportException {
+    locateResource(context.getUrlPd().getDirectHoursUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
         "directHours", context);
   }
 
   @Override
-  protected void locateEvTrendImage(UrlContext context) throws ReportException {
-    locateResource(context.getEarnedValueTrendUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
-        "evTrend", context);
+  protected void locateEvTrendImage(ReportContext context) throws ReportException {
+    locateResource(context.getUrlPd().getEarnedValueTrendUrl().toString(),
+        Constants.BODY_EVCHARITEM_IMG, "evTrend", context);
   }
 
   @Override
-  protected void locateDirectTimeTrendImage(UrlContext context) throws ReportException {
-    locateResource(context.getDirectTimeTrendUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
-        "directTimeTrend", context);
+  protected void locateDirectTimeTrendImage(ReportContext context) throws ReportException {
+    locateResource(context.getUrlPd().getDirectTimeTrendUrl().toString(),
+        Constants.BODY_EVCHARITEM_IMG, "directTimeTrend", context);
   }
 
   @Override
-  protected void locateDefectImages(UrlContext context) throws ReportException {
-    locateResource(context.getDefectsUrl().toString(), "body p img", "defects", context);
+  protected void locateDefectImages(ReportContext context) throws ReportException {
+    locateResource(context.getUrlPd().getDefectsUrl().toString(), "body p img", "defects", context);
   }
 
   @Override
-  protected void locateExternalCommitmentsImage(UrlContext context) throws ReportException {
-    locateResource(context.getExternalCommitmentsUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
-        "externalCommitments", context);
+  protected void locateExternalCommitmentsImage(ReportContext context) throws ReportException {
+    locateResource(context.getUrlPd().getExternalCommitmentsUrl().toString(),
+        Constants.BODY_EVCHARITEM_IMG, "externalCommitments", context);
   }
 
   @Override
-  protected void locateMilestonesImage(UrlContext context) throws ReportException {
-    locateResource(context.getMilestonesUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
+  protected void locateMilestonesImage(ReportContext context) throws ReportException {
+    locateResource(context.getUrlPd().getMilestonesUrl().toString(), Constants.BODY_EVCHARITEM_IMG,
         "milestones", context);
   }
 
   private void locateResource(final String contextUrl, final String xPathQuery,
-      final String fileName, UrlContext context) throws ReportException {
+      final String fileName, ReportContext context) throws ReportException {
     try {
       Document doc = Jsoup.connect(contextUrl).get();
       Elements elements = doc.select(xPathQuery);
       BufferedImage image;
       int count = 0;
       for (Element element : elements) {
-        image =
-            ImageIO.read(context.getImageFromCacheUrl(element.attr(Constants.ATTR_SRC)).toURL());
-        ContextUtil.saveImageToDisk(image, fileName + blankIfZero(count++));
+        image = ImageIO.read(
+            context.getUrlPd().getImageFromCacheUrl(element.attr(Constants.ATTR_SRC)).toURL());
+        ContextUtil.saveImageToDisk(image, context.getOutputFile(),
+            fileName + blankIfZero(count++));
       }
     } catch (IOException | NumberFormatException | ReportException e) {
       throw new ReportException("locateResource", e);
