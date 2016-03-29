@@ -9,9 +9,9 @@ public class Report {
 
   private WeekTable        weekTable;
   private PerformanceTable performanceTable;
-  private GeneralTable     generalTable;
+  private InfoReportTable     generalTable;
 
-  public Report(GeneralTable gTable, WeekTable weekTable, PerformanceTable performanceTable) {
+  public Report(InfoReportTable gTable, WeekTable weekTable, PerformanceTable performanceTable) {
     this.generalTable = gTable;
     this.weekTable = weekTable;
     this.performanceTable = performanceTable;
@@ -33,11 +33,11 @@ public class Report {
     this.weekTable = weekTable;
   }
 
-  public GeneralTable getGeneralTable() {
+  public InfoReportTable getGeneralTable() {
     return generalTable;
   }
 
-  public void setGeneralTable(GeneralTable generalTable) {
+  public void setGeneralTable(InfoReportTable generalTable) {
     this.generalTable = generalTable;
   }
 }

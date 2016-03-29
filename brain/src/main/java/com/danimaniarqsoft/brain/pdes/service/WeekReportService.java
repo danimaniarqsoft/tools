@@ -8,7 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.danimaniarqsoft.brain.pdes.model.GeneralTable;
+import com.danimaniarqsoft.brain.pdes.model.InfoReportTable;
 import com.danimaniarqsoft.brain.pdes.model.PerformanceTable;
 import com.danimaniarqsoft.brain.pdes.model.Report;
 import com.danimaniarqsoft.brain.pdes.model.WeekTable;
@@ -43,7 +43,7 @@ public class WeekReportService {
     Date toDateReportDate = DateUtils.convertStringToDate(toDateReportString);
     Date fromDateReportDate = DateUtils.moveDays(toDateReportDate, -6);
     Document mainData = Jsoup.connect(uri.getGeneralReportUrl().toString()).get();
-    GeneralTable gTable = new GeneralTable(mainData);
+    InfoReportTable gTable = new InfoReportTable(mainData);
     gTable.setReportedPeriod("Del " + DateUtils.convertDateToString(fromDateReportDate) + " al "
         + DateUtils.convertDateToString(toDateReportDate));
 

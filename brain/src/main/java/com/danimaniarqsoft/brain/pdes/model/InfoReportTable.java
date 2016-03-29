@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
 
 import com.danimaniarqsoft.brain.util.DateUtils;
 
-public class GeneralTable {
+public class InfoReportTable {
 
   private String dateReport;
   private String reportedPeriod;
@@ -16,7 +16,7 @@ public class GeneralTable {
   private String status;
   private String dateForecast;
 
-  public GeneralTable(Document doc) {
+  public InfoReportTable(Document doc) {
     Elements elements = doc.select("body table[name=STATS]");
     extractInfo(elements);
   }
