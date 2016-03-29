@@ -8,7 +8,6 @@ import java.util.Map;
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 import com.danimaniarqsoft.brain.pdes.model.PerformanceTable;
 import com.danimaniarqsoft.brain.pdes.model.Report;
-import com.danimaniarqsoft.brain.util.Constants;
 import com.danimaniarqsoft.brain.util.TemplateUtil;
 import com.danimaniarqsoft.brain.util.ZipUtils;
 
@@ -28,11 +27,10 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
   @Override
   protected void createIndexFile(Report report) throws ReportException {
     try {
-      new File(Constants.REPORT_FOLDER).mkdir();
       mainTemplate = cfg.getTemplate("templates/mainLayout.html");
       HashMap<String, Object> data = new HashMap<String, Object>();
       data.put("gn", report.getGeneralTable());
-      TemplateUtil.saveTemplate(mainTemplate, cfg, data, "index.html");
+      TemplateUtil.saveTemplate(mainTemplate, cfg, data, "index.html", report.getOutputFile());
     } catch (IOException e) {
       throw new ReportException("createIndexFile", e);
     }
@@ -42,31 +40,34 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
 
   @Override
   protected void createDefectFile(Report report) throws ReportException {
-    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "defectChart.html");
+    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "defectChart.html",
+        report.getOutputFile());
   }
 
   @Override
   protected void createExternalCommitmentsFile(Report report) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
-        "extCommitmentsChart.html");
+        "extCommitmentsChart.html", report.getOutputFile());
   }
 
   @Override
-  protected void createHoursFile(Report Report) throws ReportException {
-    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "hrsChart.html");
+  protected void createHoursFile(Report report) throws ReportException {
+    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "hrsChart.html",
+        report.getOutputFile());
   }
 
   @Override
   protected void createTaskProgressFile(Report report) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
-        "taskProgressChart.html");
+        "taskProgressChart.html", report.getOutputFile());
 
 
   }
 
   @Override
-  protected void createVgFile(Report Report) throws ReportException {
-    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "vgChart.html");
+  protected void createVgFile(Report report) throws ReportException {
+    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "vgChart.html",
+        report.getOutputFile());
 
   }
 
@@ -78,13 +79,15 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
         templateData.put("data" + i + "" + j, report.getWeekTable().getStringProperty(i, j));
       }
     }
-    TemplateUtil.saveTemplate(mainTemplate, cfg, templateData, "weekResume.html");
+    TemplateUtil.saveTemplate(mainTemplate, cfg, templateData, "weekResume.html",
+        report.getOutputFile());
 
   }
 
   @Override
   protected void createSupportFile(Report report) throws ReportException {
-    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "support.html");
+    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "support.html",
+        report.getOutputFile());
 
   }
 
@@ -93,13 +96,14 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
     PerformanceTable pt = report.getPerformanceTable();
     Map<String, Object> templateData = new HashMap<String, Object>();
     templateData.put("pTable", pt);
-    TemplateUtil.saveTemplate(mainTemplate, cfg, templateData, "performance.html");
+    TemplateUtil.saveTemplate(mainTemplate, cfg, templateData, "performance.html",
+        report.getOutputFile());
   }
 
   @Override
   protected void createMilestonesFile(Report report) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
-        "milestonesChart.html");
+        "milestonesChart.html", report.getOutputFile());
   }
 
   @Override

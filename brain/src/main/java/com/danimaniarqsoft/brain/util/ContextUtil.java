@@ -33,15 +33,14 @@ public class ContextUtil {
         .withProjectName(mainProperties.getProperty(Constants.PROPERTY_PROJECT));
   }
 
-  public static void saveToDisk(StringBuilder sb, String dataFile) {
-    new File(Constants.REPORT_FOLDER).mkdir();
+  public static void saveToDisk(StringBuilder sb, String dataFile, File outputFile) {
     FileOutputStream fop = null;
     File file;
     String content = sb.toString();
 
     try {
 
-      file = new File(Constants.REPORT_FOLDER + "/" + dataFile);
+      file = new File(outputFile, dataFile);
       fop = new FileOutputStream(file);
       // if file doesnt exists, then create it
       if (!file.exists()) {
@@ -56,14 +55,14 @@ public class ContextUtil {
       fop.close();
 
     } catch (IOException e) {
-      saveExceptionToDisk(e, "error.txt");
+      saveExceptionToDisk(e, "error.txt", outputFile);
     } finally {
       try {
         if (fop != null) {
           fop.close();
         }
       } catch (IOException e) {
-        saveExceptionToDisk(e, "error.txt");
+        saveExceptionToDisk(e, "error.txt", outputFile);
       }
     }
   }
@@ -74,12 +73,12 @@ public class ContextUtil {
         new File(Constants.REPORT_IMG_FOLDER + "/" + fileName + "." + Constants.EXTENSION_PNG));
   }
 
-  public static void saveExceptionToDisk(Throwable e, String fileName) {
+  public static void saveExceptionToDisk(Throwable e, String fileName, File outputFile) {
     StringWriter sw = new StringWriter();
     PrintWriter pw = new PrintWriter(sw);
     e.printStackTrace(pw);
     saveToDisk(new StringBuilder("Please send this log to: daniel.cortes@infotec.mx").append("\n\n")
-        .append(sw.toString()), fileName);
+        .append(sw.toString()), fileName, outputFile);
   }
 
   /**

@@ -1,5 +1,7 @@
 package com.danimaniarqsoft.brain.pdes.model;
 
+import java.io.File;
+
 /**
  * 
  * @author Daniel Cortes Pichardo
@@ -10,6 +12,7 @@ public class Report {
   private WeekTable        weekTable;
   private PerformanceTable performanceTable;
   private GeneralTable     generalTable;
+  private File             outputFile;
 
   public Report(GeneralTable gTable, WeekTable weekTable, PerformanceTable performanceTable) {
     this.generalTable = gTable;
@@ -43,6 +46,14 @@ public class Report {
 
   public void setGeneralTable(GeneralTable generalTable) {
     this.generalTable = generalTable;
+  }
+
+  public File getOutputFile() {
+    return outputFile;
+  }
+
+  public void setOutputFile(File outputFile) {
+    this.outputFile = outputFile;
   }
 
 }

@@ -1,8 +1,7 @@
 package com.danimaniarqsoft.brain.main;
 
-import java.io.IOException;
+import java.io.File;
 
-import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 import com.danimaniarqsoft.brain.pdes.service.PersonalReportService;
 import com.danimaniarqsoft.brain.util.Constants;
 import com.danimaniarqsoft.brain.util.ContextUtil;
@@ -19,12 +18,14 @@ public class WeekReportMain {
 
 
   }
+
   public static void main(String[] args) {
     try {
       UrlContext context = ContextUtil.getUrlContext();
       new PersonalReportService().createReport(context);
-    } catch (ReportException | IOException e) {
-      ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT);
+    } catch (Exception e) {
+      File fileError = new File(Constants.FILE_ERROR_TXT);
+      ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT, fileError);
     }
     System.out.println(
         "Thanks for using danimaniarqsoft solutions, visit my web page at www.danimanicp.com for futher news");

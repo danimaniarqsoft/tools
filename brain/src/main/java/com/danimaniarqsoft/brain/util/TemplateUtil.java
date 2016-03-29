@@ -34,21 +34,21 @@ public class TemplateUtil {
   }
 
   public static void mergeIntoWeekReportFile(Template template, Map<String, Object> data,
-      String fileName) throws IOException, TemplateException {
-    Writer file = new FileWriter(new File(Constants.REPORT_FOLDER + "/" + fileName));
+      String fileName, File outPutFile) throws IOException, TemplateException {
+    Writer file = new FileWriter(new File(outPutFile, fileName));
     template.process(data, file);
     file.flush();
     file.close();
   }
 
   public static void saveTemplate(Template mainTemplate, Configuration cfg,
-      Map<String, Object> subData, String templateName) throws ReportException {
+      Map<String, Object> subData, String templateName, File outPutFile) throws ReportException {
     try {
       Template performanceTemplate = cfg.getTemplate("templates/" + templateName);
       String resString = TemplateUtil.readAsString(performanceTemplate, subData);
       Map<String, Object> mainData = new HashMap<String, Object>();
       mainData.put("content", resString);
-      TemplateUtil.mergeIntoWeekReportFile(mainTemplate, mainData, templateName);
+      TemplateUtil.mergeIntoWeekReportFile(mainTemplate, mainData, templateName, outPutFile);
     } catch (Exception e) {
       throw new ReportException("createPerformanceFile", e);
     }

@@ -1,8 +1,10 @@
 package com.danimaniarqsoft.brain.pdes.service;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 
@@ -15,6 +17,7 @@ import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 import com.danimaniarqsoft.brain.pdes.model.Report;
 import com.danimaniarqsoft.brain.util.Constants;
 import com.danimaniarqsoft.brain.util.ContextUtil;
+import com.danimaniarqsoft.brain.util.DateUtils;
 import com.danimaniarqsoft.brain.util.UrlContext;
 
 /**
@@ -28,10 +31,17 @@ public class PersonalReportService extends AbstractReportTemplate {
   protected void createWeekReport(UrlContext context) throws ReportException {
     try {
       Report report = WeekReportService.createReport(context);
+      report.setOutputFile(createOutputFile());
       new HtmlTemplateService().saveHtmlReport(report);
     } catch (NumberFormatException | IOException | URISyntaxException e) {
       throw new ReportException("createWeekReport", e);
     }
+  }
+
+  private static File createOutputFile() {
+    File outputFile = new File(Constants.REPORT_FOLDER + DateUtils.getDateFolderForma(new Date()));
+    outputFile.mkdirs();
+    return outputFile;
   }
 
   @Override
@@ -81,7 +91,7 @@ public class PersonalReportService extends AbstractReportTemplate {
   }
 
   private void locateResource(final String contextUrl, final String xPathQuery,
-      final String fileName, UrlContext context) {
+      final String fileName, UrlContext context) throws ReportException {
     try {
       Document doc = Jsoup.connect(contextUrl).get();
       Elements elements = doc.select(xPathQuery);
@@ -93,7 +103,7 @@ public class PersonalReportService extends AbstractReportTemplate {
         ContextUtil.saveImageToDisk(image, fileName + blankIfZero(count++));
       }
     } catch (IOException | NumberFormatException | ReportException e) {
-      ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT);
+      throw new ReportException("locateResource", e);
     }
   }
 

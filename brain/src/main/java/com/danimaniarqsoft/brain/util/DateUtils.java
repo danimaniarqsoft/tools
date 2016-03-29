@@ -36,12 +36,15 @@ import net.objectlab.kit.datecalc.joda.LocalDateKitCalculatorsFactory;
  */
 public class DateUtils {
 
-  private final static DateTimeFormatter DATE_TIME_FORMATTER    =
+  private final static DateTimeFormatter DATE_TIME_FORMATTER          =
       DateTimeFormat.forPattern(Constants.DATE_FORMAT_PATTERN);
-  private final static DateTimeFormatter PDES_EN_TIME_FORMATTER =
+  private final static DateTimeFormatter PDES_EN_TIME_FORMATTER       =
       DateTimeFormat.forPattern(Constants.PDES_EN_DATE_FORMAT_PATTERN);
-  private final static DateTimeFormatter PDES_ES_TIME_FORMATTER =
+  private final static DateTimeFormatter PDES_ES_TIME_FORMATTER       =
       DateTimeFormat.forPattern(Constants.PDES_ES_DATE_FORMAT_PATTERN);
+  private final static DateTimeFormatter PDES_TIME_FOLDER_DATE_FORMAT =
+      DateTimeFormat.forPattern(Constants.PDES_FOLDER_DATE_FORMAT);
+
 
   private DateUtils() {}
 
@@ -152,6 +155,10 @@ public class DateUtils {
     } catch (Exception e) {
       return null;
     }
-
   }
+
+  public static String getDateFolderForma(Date dateToFormat) {
+    return PDES_TIME_FOLDER_DATE_FORMAT.print(new DateTime(dateToFormat));
+  }
+
 }
