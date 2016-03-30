@@ -1,10 +1,12 @@
 package com.danimaniarqsoft.brain.main;
 
 import java.net.URI;
+import java.util.Arrays;
 
 import org.apache.http.client.utils.URIUtils;
 
 import com.danimaniarqsoft.brain.dao.OverallMetricsDAO;
+import com.danimaniarqsoft.brain.pdes.model.SizeTable;
 
 public class MainTest {
   public static void main(String[] args) throws Exception {
@@ -37,6 +39,7 @@ public class MainTest {
     URI uri = URIUtils.createURI("http", "localhost", Integer.parseInt("2468"),
         "dads_strategy2016" + "//cms/TSP/indiv_plan_summary", "frame=content&section=100", null);
     OverallMetricsDAO omDAO = new OverallMetricsDAO(uri);
-    omDAO.findSizeTable("body div form table tbody");
+    SizeTable table = omDAO.findSizeTable("body div form table tbody");
+    String[][] t = table.getData();
   }
 }

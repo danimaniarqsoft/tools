@@ -2,7 +2,10 @@ package com.danimaniarqsoft.brain.dao;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.commons.lang.SystemUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,15 +30,18 @@ public class OverallMetricsDAO {
     Elements overallMetricsElements = overallMetrics.select(xpathQuery);
     Element sizeTable = overallMetricsElements.get(1);
     Elements rows = sizeTable.select("tr");
-
-    for (int i = 1; i < rows.size(); i++) { // first row is the col names so skip it.
+    String[][] table = new String[rows.size()][];
+    for (int i = 0; i < rows.size(); i++) { // first row is the col names so skip it.
       Element row = rows.get(i);
       Elements cols = row.select("td");
-      Object[] data = new Object[cols.size()];
-      for (int j = 0; j < data.length; j++) {
-        data[j] = cols.get(0);
+      String[] data = new String[cols.size()];
+      for (int j = 0; j < cols.size(); j++) {
+        System.out.print(cols.get(j).text());
+        data[j] = cols.get(j).text();
       }
+      System.out.println();
+      table[i] = data;
     }
-    return new SizeTable();
+    return new SizeTable(table);
   }
 }
