@@ -31,7 +31,10 @@ public class OverallMetricsDAO {
     for (int i = 1; i < rows.size(); i++) { // first row is the col names so skip it.
       Element row = rows.get(i);
       Elements cols = row.select("td");
-      System.out.println(cols.get(0));
+      Object[] data = new Object[cols.size()];
+      for (int j = 0; j < data.length; j++) {
+        data[j] = cols.get(0);
+      }
     }
     return new SizeTable();
   }
