@@ -1,5 +1,11 @@
 package com.danimaniarqsoft.brain.main;
 
+import java.net.URI;
+
+import org.apache.http.client.utils.URIUtils;
+
+import com.danimaniarqsoft.brain.dao.OverallMetricsDAO;
+
 public class MainTest {
   public static void main(String[] args) throws Exception {
     // System.out.println(DateUtils.convertDateToString(new Date()));
@@ -28,5 +34,9 @@ public class MainTest {
     // System.out.println(DateUtils.convertPdesDate(sDate));
     // Serialization
     // Serialization
+    URI uri = URIUtils.createURI("http", "localhost", Integer.parseInt("2468"),
+        "dads_strategy2016" + "//cms/TSP/indiv_plan_summary", "frame=content&section=100", null);
+    OverallMetricsDAO omDAO = new OverallMetricsDAO(uri);
+    omDAO.findSizeTable("body div form table tbody");
   }
 }
