@@ -30,7 +30,6 @@ public class OverallMetricsDAO {
     Elements overallMetricsElements = overallMetrics.select(xpathQuery);
     Element sizeTable = overallMetricsElements.get(1);
     sizeTable.addClass("table table-bordered table-striped table-responsive");
-    System.out.println(sizeTable.toString());
-    return new SizeTable(sizeTable);
+    return new SizeTable(sizeTable.toString());
   }
 }

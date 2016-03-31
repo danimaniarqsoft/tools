@@ -9,11 +9,11 @@ import java.util.List;
  */
 public class Report {
 
-  private WeekTable          weekTable;
-  private PerformanceTable   performanceTable;
-  private InfoReportTable    generalTable;
-  private volatile SizeTable sizeTable;
-  private List<String>       tasksInProgress;
+  private WeekTable        weekTable;
+  private PerformanceTable performanceTable;
+  private InfoReportTable  generalTable;
+  private SizeTable        sizeTable;
+  private List<String>     tasksInProgress;
 
   public Report(InfoReportTable gTable, WeekTable weekTable, PerformanceTable performanceTable,
       SizeTable sizeTable, List<String> tasksInProgress) {
