@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 import com.danimaniarqsoft.brain.pdes.model.PerformanceTable;
+import com.danimaniarqsoft.brain.pdes.model.SizeTable;
 import com.danimaniarqsoft.brain.pdes.service.context.ReportContext;
 import com.danimaniarqsoft.brain.util.TemplateUtil;
 import com.danimaniarqsoft.brain.util.ZipUtils;
@@ -15,15 +16,15 @@ import freemarker.template.Template;
 import freemarker.template.Version;
 
 public class HtmlTemplateService extends AbstractHtmlTemplate {
-  private static Configuration cfg = null;
-  private static Template      mainTemplate;
+  private static Configuration       cfg      = null;
+  private static Template            mainTemplate;
   private static HtmlTemplateService instance = null;
 
   static {
     cfg = new Configuration(new Version("2.3.0"));
     cfg.setClassForTemplateLoading(HtmlTemplateService.class, "/");
   }
-  
+
 
   private HtmlTemplateService() {
 
@@ -53,6 +54,16 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
   }
 
   @Override
+  protected void createSizeFile(ReportContext context) throws ReportException {
+    SizeTable sizeTable = context.getReport().getSizeTable();
+    Map<String, Object> templateData = new HashMap<String, Object>();
+    templateData.put("sizeTable", sizeTable.getData().toString());
+    TemplateUtil.saveTemplate(mainTemplate, cfg, templateData, "size.html",
+        context.getOutputFile());
+
+  }
+
+  @Override
   protected void createDefectFile(ReportContext context) throws ReportException {
     TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(), "defectChart.html",
         context.getOutputFile());
@@ -72,10 +83,10 @@ public class HtmlTemplateService extends AbstractHtmlTemplate {
 
   @Override
   protected void createTaskProgressFile(ReportContext context) throws ReportException {
-    TemplateUtil.saveTemplate(mainTemplate, cfg, new HashMap<String, Object>(),
-        "taskProgressChart.html", context.getOutputFile());
-
-
+    HashMap<String, Object> data = new HashMap<String, Object>();
+    data.put("tasks", context.getReport().getTasksInProgress());
+    TemplateUtil.saveTemplate(mainTemplate, cfg, data, "taskProgressChart.html",
+        context.getOutputFile());
   }
 
   @Override

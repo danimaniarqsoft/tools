@@ -12,6 +12,8 @@ public abstract class AbstractHtmlTemplate {
   protected abstract void createExternalCommitmentsFile(ReportContext context)
       throws ReportException;
 
+  protected abstract void createSizeFile(ReportContext context) throws ReportException;
+
   protected abstract void createHoursFile(ReportContext context) throws ReportException;
 
   protected abstract void createTaskProgressFile(ReportContext context) throws ReportException;
@@ -34,6 +36,7 @@ public abstract class AbstractHtmlTemplate {
     createIndexFile(context);
     createWeekResumeFile(context);
     createPerformanceFile(context);
+    createSizeFile(context);
     createVgFile(context);
     createHoursFile(context);
     createExternalCommitmentsFile(context);

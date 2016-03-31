@@ -48,7 +48,7 @@ public class PersonalReportService extends AbstractReportTemplate {
       Report report = WeekReportService.createReport(context.getUrlPd());
       context.setReport(report);
       HtmlTemplateService.getInstance().saveHtmlReport(context);
-      ContextUtil.saveJsonFormat(context);
+//      ContextUtil.saveJsonFormat(context);
     } catch (NumberFormatException | IOException | URISyntaxException e) {
       throw new ReportException("createWeekReport", e);
     }

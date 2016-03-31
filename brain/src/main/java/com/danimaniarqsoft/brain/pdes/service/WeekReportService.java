@@ -2,15 +2,20 @@ package com.danimaniarqsoft.brain.pdes.service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import com.danimaniarqsoft.brain.dao.OverallMetricsDAO;
 import com.danimaniarqsoft.brain.pdes.model.InfoReportTable;
 import com.danimaniarqsoft.brain.pdes.model.PerformanceTable;
 import com.danimaniarqsoft.brain.pdes.model.Report;
+import com.danimaniarqsoft.brain.pdes.model.SizeTable;
 import com.danimaniarqsoft.brain.pdes.model.WeekTable;
 import com.danimaniarqsoft.brain.util.ContextUtil;
 import com.danimaniarqsoft.brain.util.DateUtils;
@@ -29,23 +34,26 @@ public class WeekReportService {
 
   /**
    * 
-   * @param uri
+   * @param urlPd
    * @return
    * @throws IOException
    * @throws URISyntaxException
    */
-  public static Report createReport(final UrlPd uri) throws IOException, URISyntaxException {
-    Document doc = Jsoup.connect(uri.getWeekReportUrl().toString()).get();
+  public static Report createReport(final UrlPd urlPd) throws IOException, URISyntaxException {
+    Document doc = Jsoup.connect(urlPd.getWeekReportUrl().toString()).get();
     WeekTable table = new WeekTable(doc);
     Element element = doc.select("body table tbody tr td.left").get(1);
     String parse = element.text();
     String toDateReportString = DateUtils.convertPdesDate(DateUtils.extractDate(parse));
     Date toDateReportDate = DateUtils.convertStringToDate(toDateReportString);
     Date fromDateReportDate = DateUtils.moveDays(toDateReportDate, -6);
-    Document mainData = Jsoup.connect(uri.getGeneralReportUrl().toString()).get();
+    Document mainData = Jsoup.connect(urlPd.getGeneralReportUrl().toString()).get();
     InfoReportTable gTable = new InfoReportTable(mainData);
     gTable.setReportedPeriod("Del " + DateUtils.convertDateToString(fromDateReportDate) + " al "
         + DateUtils.convertDateToString(toDateReportDate));
+    OverallMetricsDAO omDAO = new OverallMetricsDAO(urlPd);
+    SizeTable sizeTable = omDAO.findSizeTable("body div form table");
+    List<String> tasksInProgress = findTasksInProgress(urlPd);
 
     String vg = computeVg(table);
     String vgDiff = computeVgDiff(table);
@@ -66,9 +74,20 @@ public class WeekReportService {
 
     // Otros calculos
     gTable.setStatus(ContextUtil.computeStatus(vgDiff));
-    return new Report(gTable, table, pTable);
+    return new Report(gTable, table, pTable, sizeTable, tasksInProgress);
   }
 
+
+  private static List<String> findTasksInProgress(UrlPd urlPd)
+      throws IOException, URISyntaxException {
+    Document doc = Jsoup.connect(urlPd.getWeekReportUrl().toString()).get();
+    Elements task = doc.select("[name=dueTask]").get(0).select("td.left");
+    List<String> tasksInProgress = new ArrayList<String>();
+    for (Element element : task) {
+      tasksInProgress.add(element.text());
+    }
+    return tasksInProgress;
+  }
 
   public static String computeVg(WeekTable table) {
     return Double.toString(table.getDoubleProperty(1, 4));

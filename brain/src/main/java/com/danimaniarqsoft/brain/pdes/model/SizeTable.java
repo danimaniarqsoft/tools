@@ -1,13 +1,15 @@
 package com.danimaniarqsoft.brain.pdes.model;
 
-public class SizeTable {
-  String[][] data;
+import org.jsoup.nodes.Element;
 
-  public SizeTable(String[][] data) {
+public class SizeTable {
+  Element data;
+
+  public SizeTable(Element data) {
     this.data = data;
   }
 
-  public String[][] getData() {
+  public Element getData() {
     return this.data;
   }
 }

@@ -62,6 +62,16 @@ public class UrlPd {
         projectName + "//cms/TSP/indiv_plan_summary", "frame=content&section=100", null);
   }
 
+  public URI getReportsPlanSummaryUrl() throws NumberFormatException, URISyntaxException {
+    return URIUtils.createURI(scheme, host, Integer.parseInt(port), "reports" + "/form2html.class",
+        null, null);
+  }
+
+  public URI getWeeklyTasksUrl() throws NumberFormatException, URISyntaxException {
+    return URIUtils.createURI(scheme, host, Integer.parseInt(port), projectName+"/+" + "/reports/week.class",
+        null, null);
+  }
+
   public URI getEvImageUrl() throws ReportException {
     try {
       return getUrlReport("cumValueChart");

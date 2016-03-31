@@ -33,6 +33,6 @@ public class WeekReportMain {
       ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT, new File("./"));
     }
     LOGGER.info(
-        "Thanks for using danimaniarqsoft solutions, visit my web page at www.danimanicp.com for futher news");
+        "Thanks for using danimaniarqsoft solutions, visit my web page at www.danimanicp.com for further news");
   }
 }

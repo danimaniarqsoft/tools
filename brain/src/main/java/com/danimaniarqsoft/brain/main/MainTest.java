@@ -1,12 +1,12 @@
 package com.danimaniarqsoft.brain.main;
 
 import java.net.URI;
-import java.util.Arrays;
 
 import org.apache.http.client.utils.URIUtils;
-
-import com.danimaniarqsoft.brain.dao.OverallMetricsDAO;
-import com.danimaniarqsoft.brain.pdes.model.SizeTable;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class MainTest {
   public static void main(String[] args) throws Exception {
@@ -37,9 +37,12 @@ public class MainTest {
     // Serialization
     // Serialization
     URI uri = URIUtils.createURI("http", "localhost", Integer.parseInt("2468"),
-        "dads_strategy2016" + "//cms/TSP/indiv_plan_summary", "frame=content&section=100", null);
-    OverallMetricsDAO omDAO = new OverallMetricsDAO(uri);
-    SizeTable table = omDAO.findSizeTable("body div form table tbody");
-    String[][] t = table.getData();
+        "dads_strategy2016" + "/+" + "/reports/week.class", null, null);
+    // URIUtils.createURI(scheme, host, Integer.parseInt(port), "+" + "/reports/week.class",
+    Document doc = Jsoup.connect(uri.toString()).get();
+    Elements task = doc.select("[name=dueTask]").get(0).select("td.left");
+    for (Element element : task) {
+      System.out.println(element.text());
+    }
   }
 }
