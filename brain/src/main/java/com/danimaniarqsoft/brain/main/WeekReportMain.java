@@ -25,6 +25,7 @@ public class WeekReportMain {
 
 	public static void main(String[] args) {
 		try {
+			
 			ReportContext context = new ReportContext();
 			UrlPd urlPd = ContextUtil.getUrlContext();
 			context.setUrlPd(urlPd);
