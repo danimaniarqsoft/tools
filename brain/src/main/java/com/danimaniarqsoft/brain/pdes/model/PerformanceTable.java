@@ -1,5 +1,7 @@
 package com.danimaniarqsoft.brain.pdes.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class PerformanceTable {
 
   private String vg;
@@ -99,6 +101,11 @@ public class PerformanceTable {
 
   public void setVgFalta(String vgFalta) {
     this.vgFalta = vgFalta;
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 
   /**

@@ -5,6 +5,9 @@
 <?import javafx.scene.control.*?>
 <?import org.tbee.javafx.scene.layout.fxml.MigPane?>
 <?import layouttests.migfxml.sample1.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <MigPane id="rootPane" fx:controller="com.danimaniarqsoft.brain.controller.PdesReportController"
         styleClass="main-panel"
@@ -13,8 +16,13 @@
         rows="" 
         xmlns:fx="http://javafx.com/fxml">
 
-    <Label text="Nombre:" /> <TextField fx:id="firstNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
-    <Label text="Observaciones:" />	<TextField fx:id="lastNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
+	<GridPane layoutX="1.0" layoutY="2.0" >
+     <children>
+     	<Label text="Nombre:" /> <TextField fx:id="firstNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
+    	<Label text="Observaciones:" />	<TextField fx:id="lastNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
+   	 </children>
+     </GridPane>
+
 
     <Button fx:id="btnReportId" text="WeekReport" MigPane.cc="skip, gap :push, gaptop 15, wrap" />
 

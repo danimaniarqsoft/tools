@@ -54,7 +54,14 @@ public class WeekReportService {
     OverallMetricsDAO omDAO = new OverallMetricsDAO(urlPd);
     SizeTable sizeTable = omDAO.findSizeTable("body div form table");
     List<String> tasksInProgress = findTasksInProgress(urlPd);
+    PerformanceTable pTable = computeData(table);
+    // Otros calculos
+    gTable.setStatus(ContextUtil.computeStatus(pTable.getVgDiff()));
+    return new Report(gTable, table, pTable, sizeTable, tasksInProgress);
+  }
 
+
+  public static PerformanceTable computeData(WeekTable table) {
     String vg = computeVg(table);
     String vgDiff = computeVgDiff(table);
     String vgFalta = computeVgFalta(table);
@@ -66,17 +73,12 @@ public class WeekReportService {
     String vgNoRe = computeVgNotPerformed(vhxH, hsTareasTerm);
     String recup = computeRecoveryWeeks(table);
 
-    PerformanceTable pTable = PerformanceTable.getBuilder().withVg(vg).withVgDiff(vgDiff)
-        .withVgFalta(vgFalta).withTaskHours(horasTarea).withTaskClosed(tareaCerradas)
+    return PerformanceTable.getBuilder().withVg(vg).withVgDiff(vgDiff).withVgFalta(vgFalta)
+        .withTaskHours(horasTarea).withTaskClosed(tareaCerradas)
         .withHoursNotFinished(Double.toString(hsTareasTerm)).withWeekHrsNotFinished(semHrTarNoTerm)
         .withVgPerHour(Double.toString(vhxH)).withVgNotPerformed(vgNoRe).withRecovery(recup)
         .build();
-
-    // Otros calculos
-    gTable.setStatus(ContextUtil.computeStatus(vgDiff));
-    return new Report(gTable, table, pTable, sizeTable, tasksInProgress);
   }
-
 
   private static List<String> findTasksInProgress(UrlPd urlPd)
       throws IOException, URISyntaxException {

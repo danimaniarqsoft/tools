@@ -1,15 +1,17 @@
 package com.danimaniarqsoft.brain.pdes.model;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import com.danimaniarqsoft.brain.main.DateCalculator;
 
-public class WeekTable {
+public class WeekTable implements Serializable {
 
-  private TableWrapper tableWrapper;
+  private static final long serialVersionUID = 8925317157999586338L;
+  private TableWrapper      tableWrapper;
 
   public WeekTable(Document doc) throws IOException {
     Elements elements = doc.select("body table tbody tr");
