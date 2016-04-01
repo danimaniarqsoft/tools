@@ -129,8 +129,8 @@ public class WeekReportService {
   }
 
   public static String computeRecoveryWeeks(WeekTable table) {
-    return Double.toString(table.getDoubleProperty(1, 3)
-        - (table.getDoubleProperty(1, 4)) / table.getDoubleProperty(2, 4));
+    return Double.toString((table.getDoubleProperty(1, 3)
+        - table.getDoubleProperty(1, 4)) / table.getDoubleProperty(2, 4));
   }
 
 }
