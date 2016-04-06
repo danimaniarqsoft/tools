@@ -1,39 +1,37 @@
 package com.danimaniarqsoft.brain.main;
 
-import java.io.File;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.danimaniarqsoft.brain.pdes.service.PersonalReportService;
-import com.danimaniarqsoft.brain.pdes.service.context.ReportContext;
-import com.danimaniarqsoft.brain.util.Constants;
-import com.danimaniarqsoft.brain.util.ContextUtil;
-import com.danimaniarqsoft.brain.util.UrlPd;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /*
  * WeekReportMain class execute the main app.
  * 
  * @author Daniel Cortes Pichardo
  */
-public class WeekReportMain {
-	private static final Logger LOGGER = LoggerFactory.getLogger(WeekReportMain.class);
+public class WeekReportMain extends Application {
+  private static final Logger LOGGER = LoggerFactory.getLogger(WeekReportMain.class);
 
-	public WeekReportMain() {
 
-	}
+  public static void main(String[] args) {
+    launch(args);
+  }
 
-	public static void main(String[] args) {
-		try {
-			ReportContext context = new ReportContext();
-			UrlPd urlPd = ContextUtil.getUrlContext();
-			context.setUrlPd(urlPd);
-			PersonalReportService.getInstance().createReport(context);
-			LOGGER.info("");
-		} catch (Exception e) {
-			ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT, new File("./"));
-		}
-		LOGGER.info(
-				"Thanks for using danimaniarqsoft solutions, visit my web page at www.danimanicp.com for further news");
-	}
+  @Override
+  public void start(Stage stage) throws Exception {
+    LOGGER.info("Starting Brain");
+    String fxmlFile = "/fxml/main.fxml";
+    FXMLLoader loader = new FXMLLoader();
+    Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+    Scene scene = new Scene(rootNode, 400, 250);
+    scene.getStylesheets().add("/styles/styles.css");
+    stage.setTitle("Brain");
+    stage.setScene(scene);
+    stage.show();
+  }
 }

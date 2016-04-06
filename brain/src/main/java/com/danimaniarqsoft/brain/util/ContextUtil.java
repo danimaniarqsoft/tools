@@ -28,19 +28,6 @@ public class ContextUtil {
 
   }
 
-  public static UrlPd getUrlContext() throws IOException {
-    Properties mainProperties = new Properties();
-    FileInputStream file;
-    String path = Constants.FILE_PDES_PROPERTIES;
-    file = new FileInputStream(path);
-    mainProperties.load(file);
-    file.close();
-    return UrlPd.createUrl().withHost(Constants.PDES_CLIENT_HOST_NAME)
-        .withScheme(Constants.PDES_SCHEME)
-        .withPort(mainProperties.getProperty(Constants.PROPERTY_PORT))
-        .withProjectName(mainProperties.getProperty(Constants.PROPERTY_PROJECT));
-  }
-
   public static void saveToDisk(StringBuilder sb, String dataFile, File outputFile) {
     if (!outputFile.exists()) {
       outputFile.mkdirs();

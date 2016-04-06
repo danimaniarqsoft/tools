@@ -1,17 +1,22 @@
 package com.danimaniarqsoft.brain.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.danimaniarqsoft.brain.pdes.exceptions.ReportException;
 import com.danimaniarqsoft.brain.pdes.service.PersonalReportService;
 import com.danimaniarqsoft.brain.pdes.service.context.ReportContext;
 import com.danimaniarqsoft.brain.util.Constants;
 import com.danimaniarqsoft.brain.util.ContextUtil;
+import com.danimaniarqsoft.brain.util.PropertyFileUtils;
 import com.danimaniarqsoft.brain.util.UrlPd;
 
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,23 +33,31 @@ public class PdesReportController {
   private static final Logger LOGGER = LoggerFactory.getLogger(PdesReportController.class);
 
   @FXML
-  private TextField           firstNameField;
+  private TextField           projectName;
   @FXML
-  private TextField           lastNameField;
+  private TextField           port;
   @FXML
   private Label               messageLabel;
-
   @FXML
   private Button              btnReportId;
+  @FXML
+  private Button              btnSaveProperties;
+
+  private UrlPd               urlPd;
 
   /**
    * Initializes the controller class. This method is automatically called after the fxml file has
    * been loaded.
+   * 
+   * @throws IOException
+   * @throws ReportException
    */
   @FXML
-  private void initialize() {
+  private void initialize() throws IOException, ReportException {
+    urlPd = PropertyFileUtils.loadUrlContext();
+    projectName.setText(urlPd.getProjectName());
+    port.setText(urlPd.getPort());
     btnReportId.setOnAction((event) -> {
-
       Alert alert = new Alert(AlertType.INFORMATION);
       alert.setTitle("PDES Reporter");
       alert.setHeaderText("Reporte Semanal");
@@ -54,10 +67,8 @@ public class PdesReportController {
         public Boolean call() {
           try {
             ReportContext context = new ReportContext();
-            UrlPd urlPd = ContextUtil.getUrlContext();
             context.setUrlPd(urlPd);
             PersonalReportService.getInstance().createReport(context);
-            LOGGER.info("");
           } catch (Exception e) {
             ContextUtil.saveExceptionToDisk(e, Constants.FILE_ERROR_TXT, new File("./"));
           }
@@ -66,7 +77,6 @@ public class PdesReportController {
           return true;
         }
       };
-
       task.setOnRunning((e) -> alert.show());
       task.setOnSucceeded((e) -> {
         alert.hide();
@@ -79,6 +89,15 @@ public class PdesReportController {
       new Thread(task).start();
       messageLabel.setText("¡Gracias por Utilizar Brain!");
     });
+  }
+
+  @FXML
+  public void saveProperties(ActionEvent event) {
+    Properties props = new Properties();
+    props.setProperty(Constants.PROPERTY_PORT, port.getText());
+    props.setProperty(Constants.PROPERTY_PROJECT, projectName.getText());
+    PropertyFileUtils.saveProperties(props);
+    messageLabel.setText("Datos Guardados!");
   }
 
   public static Popup createPopup(final String message) {

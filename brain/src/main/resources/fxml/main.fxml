@@ -9,23 +9,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<MigPane id="rootPane" fx:controller="com.danimaniarqsoft.brain.controller.PdesReportController"
-        styleClass="main-panel"
-        layout="insets 20"
-        cols="[label, pref!][grow, 50::]"
-        rows="" 
-        xmlns:fx="http://javafx.com/fxml">
-
-	<GridPane layoutX="1.0" layoutY="2.0" >
-     <children>
-     	<Label text="Nombre:" /> <TextField fx:id="firstNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
-    	<Label text="Observaciones:" />	<TextField fx:id="lastNameField" prefColumnCount="30" MigPane.cc="growx, wrap" />
-   	 </children>
-     </GridPane>
+<MigPane id="rootPane"
+	fx:controller="com.danimaniarqsoft.brain.controller.PdesReportController"
+	styleClass="main-panel" layout="insets 20" cols="[label, pref!][grow, 50::]"
+	rows="" xmlns:fx="http://javafx.com/fxml">
 
 
-    <Button fx:id="btnReportId" text="WeekReport" MigPane.cc="skip, gap :push, gaptop 15, wrap" />
+	<Label text="Proyecto:" />
+	<TextField fx:id="projectName" prefColumnCount="30"
+		MigPane.cc="growx, wrap" />
+	<Label text="Puerto:" />
+	<TextField fx:id="port" prefColumnCount="5" MigPane.cc=" wrap" />
+	<Button fx:id="btnSaveProperties" text="Guardar"
+		MigPane.cc="skip, gap :push, gaptop 15, wrap" onAction="#saveProperties" />
+		
+	<Button fx:id="btnReportId" text="WeekReport"
+		MigPane.cc="skip, gap :push, gaptop 15, wrap" />
 
-    <Label fx:id="messageLabel" styleClass="hello-message" MigPane.cc="span, growx, gaptop 15" />
+	<Label fx:id="messageLabel" styleClass="hello-message"
+		MigPane.cc="span, growx, gaptop 15" />
 
-</MigPane >
+
+</MigPane>

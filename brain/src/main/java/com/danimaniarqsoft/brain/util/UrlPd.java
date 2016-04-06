@@ -155,4 +155,20 @@ public class UrlPd {
       throw new ReportException("getUrlReport", e);
     }
   }
+
+  public String getPort() {
+    return port;
+  }
+
+  public void setPort(String port) {
+    this.port = port;
+  }
+
+  public String getProjectName() {
+    return projectName;
+  }
+
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
 }

@@ -21,7 +21,7 @@ public class MainApp extends Application {
 
   public void start(Stage stage) throws Exception {
     LOGGER.info("Starting Brain");
-    String fxmlFile = "/fxml/hello.fxml";
+    String fxmlFile = "/fxml/main.fxml";
     FXMLLoader loader = new FXMLLoader();
     Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
     Scene scene = new Scene(rootNode, 400, 200);
