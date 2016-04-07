@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import com.danimaniarqsoft.brain.pdes.model.TipoReporte ?>
+<?import javafx.collections.FXCollections ?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import org.tbee.javafx.scene.layout.fxml.MigPane?>
@@ -12,22 +14,29 @@
 <MigPane id="rootPane"
 	fx:controller="com.danimaniarqsoft.brain.controller.PdesReportController"
 	styleClass="main-panel" layout="insets 20" cols="[label, pref!][grow, 50::]"
-	rows="" xmlns:fx="http://javafx.com/fxml">
-
-
+	rows="" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<children>
 	<Label text="Proyecto:" />
-	<TextField fx:id="projectName" prefColumnCount="30"
-		MigPane.cc="growx, wrap" />
+	<TextField fx:id="projectName" prefColumnCount="90"
+		MigPane.cc="wrap" />
 	<Label text="Puerto:" />
 	<TextField fx:id="port" prefColumnCount="5" MigPane.cc=" wrap" />
-	<Button fx:id="btnSaveProperties" text="Guardar"
-		MigPane.cc="skip, gap :push, gaptop 15, wrap" onAction="#saveProperties" />
-		
-	<Button fx:id="btnReportId" text="WeekReport"
-		MigPane.cc="skip, gap :push, gaptop 15, wrap" />
-
-	<Label fx:id="messageLabel" styleClass="hello-message"
-		MigPane.cc="span, growx, gaptop 15" />
-
-
+	<Label text="Tipo de Reporte" />
+	<ComboBox fx:id="cbxTipoReportId">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+            </FXCollections>
+          </items>
+    </ComboBox>
+    <Label text="Tipo de Reporte" />
+    
+		<Button fx:id="btnSaveProperties" text="Guardar"
+			MigPane.cc="skip, gap :push, gaptop 15, wrap" onAction="#saveProperties" />
+			
+		<Button fx:id="btnReportId" text="WeekReport"
+			MigPane.cc="skip, gap :push, gaptop 15, wrap" />
+	
+		<Label fx:id="messageLabel" styleClass="hello-message"
+			MigPane.cc="span, growx, gaptop 15" />
+  </children>
 </MigPane>
