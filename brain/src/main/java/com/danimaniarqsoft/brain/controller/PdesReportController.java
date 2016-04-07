@@ -27,7 +27,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -37,9 +36,9 @@ public class PdesReportController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PdesReportController.class);
 
 	@FXML
-	private TextField projectName;
+	private Label projectName;
 	@FXML
-	private TextField port;
+	private Label port;
 	@FXML
 	private Label messageLabel;
 	@FXML
