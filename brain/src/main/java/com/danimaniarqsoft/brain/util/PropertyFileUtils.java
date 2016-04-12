@@ -2,6 +2,7 @@ package com.danimaniarqsoft.brain.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,17 +13,24 @@ public class PropertyFileUtils {
 
   }
 
-  public static UrlPd loadUrlContext() throws IOException {
-    Properties mainProperties = new Properties();
-    FileInputStream file;
-    String path = Constants.FILE_PDES_PROPERTIES;
-    file = new FileInputStream(path);
-    mainProperties.load(file);
-    file.close();
-    return UrlPd.createUrl().withHost(Constants.PDES_CLIENT_HOST_NAME)
-        .withScheme(Constants.PDES_SCHEME)
-        .withPort(mainProperties.getProperty(Constants.PROPERTY_PORT))
-        .withProjectName(mainProperties.getProperty(Constants.PROPERTY_PROJECT));
+  public static UrlPd loadUrlContext() {
+    try {
+      Properties mainProperties = new Properties();
+      FileInputStream file;
+      String path = Constants.FILE_PDES_PROPERTIES;
+      file = new FileInputStream(path);
+      mainProperties.load(file);
+      file.close();
+      return UrlPd.createUrl().withHost(Constants.PDES_CLIENT_HOST_NAME)
+          .withScheme(Constants.PDES_SCHEME)
+          .withPort(mainProperties.getProperty(Constants.PROPERTY_PORT))
+          .withProjectName(mainProperties.getProperty(Constants.PROPERTY_PROJECT));
+    } catch (IOException e) {
+      throw new RuntimeException("loadUrlContext", e);
+    }
+
+
+
   }
 
   public static void saveProperties(Properties prop) {

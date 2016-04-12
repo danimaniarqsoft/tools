@@ -21,8 +21,9 @@
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0"
 					prefWidth="100.0">
 					<children>
-						<Label layoutX="104.0" layoutY="51.0" text="Generación de Reporte Semanal"
-							AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+						<Label layoutX="104.0" layoutY="51.0"
+							text="Generación de Reporte Semanal" AnchorPane.leftAnchor="5.0"
+							AnchorPane.topAnchor="5.0" />
 						<GridPane layoutX="43.0" layoutY="104.0"
 							AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
 							AnchorPane.topAnchor="30.0">
@@ -61,6 +62,10 @@
 						</GridPane>
 						<ButtonBar layoutX="54.0" layoutY="250.0"
 							AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+							<buttons>
+								<Button fx:id="btnProperties" text="Editar Propiedades"
+									onAction="#goPropertiesScreen" />
+							</buttons>
 							<buttons>
 								<Button fx:id="btnReportId" text="Generar Reporte" />
 							</buttons>

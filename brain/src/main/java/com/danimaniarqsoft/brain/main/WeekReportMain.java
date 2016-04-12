@@ -5,11 +5,11 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.danimaniarqsoft.brain.controller.ScreensController;
+
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /*
@@ -18,9 +18,13 @@ import javafx.stage.Stage;
  * @author Daniel Cortes Pichardo
  */
 public class WeekReportMain extends Application {
-  private static final Logger LOGGER = LoggerFactory.getLogger(WeekReportMain.class);
+  private static final Logger LOGGER         = LoggerFactory.getLogger(WeekReportMain.class);
   private Stage               primaryStage;
-  private BorderPane          rootLayout;
+
+  public static String        main           = "main";
+  public static String        mainFile       = "/fxml/Main.fxml";
+  public static String        properties     = "screen2";
+  public static String        propertiesFile = "/fxml/Properties.fxml";
 
   public static void main(String[] args) {
     launch(args);
@@ -28,28 +32,14 @@ public class WeekReportMain extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
-    this.primaryStage = primaryStage;
-    this.primaryStage.setTitle("Monkey Brain");
-    initRootLayout();
-    initMainAppLayout();
-  }
-
-
-  private void initMainAppLayout() throws IOException {
-    String fxmlFile = "/fxml/Main.fxml";
-    FXMLLoader loader = new FXMLLoader();
-    Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
-    primaryStage.show();
-    rootLayout.setCenter(rootNode);
-  }
-
-  private void initRootLayout() throws IOException {
-    // Load root layout from fxml file.
-    FXMLLoader loader = new FXMLLoader();
-    loader.setLocation(WeekReportMain.class.getResource("/fxml/RootLayout.fxml"));
-    rootLayout = (BorderPane) loader.load();
-    // Show the scene containing the root layout.
-    Scene scene = new Scene(rootLayout);
+    ScreensController mainContainer = new ScreensController();
+    mainContainer.loadScreen(WeekReportMain.main, WeekReportMain.mainFile);
+    mainContainer.loadScreen(WeekReportMain.properties, WeekReportMain.propertiesFile);
+    mainContainer.setScreen(WeekReportMain.main);
+    Group root = new Group();
+    root.getChildren().addAll(mainContainer);
+    Scene scene = new Scene(root);
+    scene.getStylesheets().add("/styles/styles.css");
     primaryStage.setScene(scene);
     primaryStage.show();
   }
@@ -60,6 +50,7 @@ public class WeekReportMain extends Application {
    * @return
    */
   public Stage getPrimaryStage() {
+    LOGGER.debug(primaryStage.toString());
     return primaryStage;
   }
 }
