@@ -10,13 +10,13 @@
 <?import javafx.collections.FXCollections ?>
 <?import javafx.scene.*?>
 
-<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danimaniarqsoft.brain.controller.PdesReportController">
+<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danimaniarqsoft.brain.controller.PdesReportController">
 	<children>
 		<SplitPane layoutX="153.0" layoutY="70.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<items>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0">
+				<AnchorPane styleClass="background" minHeight="0.0" minWidth="0.0" prefHeight="298.0">
 					<children>
-						<Label styleClass="welcome-text" layoutX="104.0" layoutY="51.0" text="Reporte Semanal" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+						<Label font="$x1" fx:id="mainText" text="Reporte Semanal" styleClass="item-title"  />
 						<GridPane layoutX="10.0" layoutY="34.0" prefHeight="96.0" prefWidth="314.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="74.0" AnchorPane.topAnchor="34.0">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="10.0" prefWidth="157.0" />
@@ -29,7 +29,7 @@
                         <RowConstraints />
 							</rowConstraints>
 							<children>
-								<Label text="Nombre del Proyecto: " />
+								<Label text="Proyecto: " />
 								<Label fx:id="projectName" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
 								<Label text="Puerto: " GridPane.rowIndex="1" />
@@ -45,12 +45,12 @@
 								<Label fx:id="messageLabel" styleClass="hello-message" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 							</children>
 						</GridPane>
-						<ButtonBar layoutX="54.0" layoutY="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+						<ButtonBar layoutX="54.0" layoutY="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" styleClass="default">
 							<buttons>
-								<Button fx:id="btnProperties" onAction="#goPropertiesScreen" text="Editar Propiedades" />
+								<Button defaultButton="true" fx:id="btnProperties" onAction="#goPropertiesScreen" text="Editar" styleClass="default"/>
 							</buttons>
 							<buttons>
-								<Button fx:id="btnReportId" text="Generar Reporte" />
+								<Button defaultButton="true" fx:id="btnReportId" text="Generar" styleClass="default" />
 							</buttons>
 						</ButtonBar>
 					</children>

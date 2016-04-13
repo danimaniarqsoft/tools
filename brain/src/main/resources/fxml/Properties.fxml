@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import layouttests.migfxml.sample1.*?>
 
-<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danimaniarqsoft.brain.controller.PropertiesController">
+<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danimaniarqsoft.brain.controller.PropertiesController">
 	<children>
 		<SplitPane layoutX="153.0" layoutY="70.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<items>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="737.0">
+				<AnchorPane styleClass="background" minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="737.0">
 					<children>
-						<Label layoutX="104.0" layoutY="51.0" text="Datos de Configuración" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+						<Label fx:id="propertiesText" layoutX="104.0" layoutY="51.0" text="Datos de Configuración" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
 						<GridPane layoutX="43.0" layoutY="104.0" prefHeight="75.0" prefWidth="331.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="62.0" AnchorPane.topAnchor="30.0">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" maxWidth="456.0" minWidth="0.0" prefWidth="144.0" />
@@ -24,7 +24,7 @@
                         <RowConstraints />
 							</rowConstraints>
 							<children>
-								<Label text="Nombre del Proyecto: " />
+								<Label text="Proyecto: " />
 								<Label text="Puerto:" GridPane.rowIndex="1" />
 
 								<TextField fx:id="projectName" prefColumnCount="90" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" />

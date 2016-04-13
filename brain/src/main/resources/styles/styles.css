@@ -4,10 +4,14 @@
 }
 
 .label {
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #333333;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+	-fx-font-size: 12px;
+	-fx-font-weight: bold;
+	-fx-text-fill: #2e3436;
+	-fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 0, 0, 0, 1);
+}
+
+.background {
+	-fx-background-image: url("../images/background.jpg");
 }
 
 .button {
@@ -19,7 +23,7 @@
 }
 
 .button:hover {
-	-fx-base: #395bae;
+	-fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
 
 /* Component specific styles */
@@ -43,9 +47,21 @@
 	-fx-font-size: 14px;
 }
 
-.welcome-text {
-   -fx-font-size: 25px;
-   -fx-font-family: "Arial Black";
-   -fx-fill: #818181;
-   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+#actiontarget {
+	-fx-fill: FIREBRICK;
+	-fx-font-weight: bold;
+	-fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 0, 0, 0, 1);
+}
+
+#mainText {
+	-fx-font-size: 32px;
+	-fx-font-family: "Arial Black";
+	-fx-fill: #818181;
+	-fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+}
+#propertiesText {
+	-fx-font-size: 22px;
+	-fx-font-family: "Arial Black";
+	-fx-fill: #818181;
+	-fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
 }

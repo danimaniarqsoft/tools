@@ -8,8 +8,16 @@ import org.slf4j.LoggerFactory;
 import com.danimaniarqsoft.brain.controller.ScreensController;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /*
@@ -25,6 +33,8 @@ public class WeekReportMain extends Application {
 	public static String mainFile = "/fxml/Main.fxml";
 	public static String properties = "Properties";
 	public static String propertiesFile = "/fxml/Properties.fxml";
+	public static final String APPLICATION_ICON = "http://cdn1.iconfinder.com/data/icons/Copenhagen/PNG/32/people.png";
+	public static final String SPLASH_IMAGE = "http://fxexperience.com/wp-content/uploads/2010/06/logo.png";
 
 	public static void main(String[] args) {
 		launch(args);
@@ -40,7 +50,8 @@ public class WeekReportMain extends Application {
 		root.getChildren().addAll(mainContainer);
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
-		scene.getStylesheets().add("/styles/styles.css");
+		primaryStage.setTitle("Monkey Brain");
+		scene.getStylesheets().add("/styles/JMetroLightTheme.css");
 		primaryStage.show();
 	}
 
