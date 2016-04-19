@@ -7,21 +7,21 @@ import javafx.stage.Stage;
 
 public class ScreensFramework extends Application {
 
-  public static String screen1ID = "main";
-  public static String screen1File = "Screen1.fxml";
-  public static String screen2ID = "screen2";
-  public static String screen2File = "Screen2.fxml";
-  public static String screen3ID = "screen3";
-  public static String screen3File = "Screen3.fxml";
+  public static String SCREEN1ID = "main";
+  public static String SCREEN1FILE = "Screen1.fxml";
+  public static String SCREEN2ID = "screen2";
+  public static String SCREEN2FILE = "Screen2.fxml";
+  public static String SCREEN3ID = "screen3";
+  public static String SCREEN3FILE = "Screen3.fxml";
   
   @Override
   public void start(Stage primaryStage) throws Exception {
     ScreensController mainContainer = new ScreensController();
-    mainContainer.loadScreen(ScreensFramework.screen1ID, ScreensFramework.screen1File);
-    mainContainer.loadScreen(ScreensFramework.screen2ID, ScreensFramework.screen2File);
-    mainContainer.loadScreen(ScreensFramework.screen3ID, ScreensFramework.screen3File);
+    mainContainer.loadScreen(ScreensFramework.SCREEN1ID, ScreensFramework.SCREEN1FILE);
+    mainContainer.loadScreen(ScreensFramework.SCREEN2ID, ScreensFramework.SCREEN2FILE);
+    mainContainer.loadScreen(ScreensFramework.SCREEN3ID, ScreensFramework.SCREEN3FILE);
     
-    mainContainer.setScreen(ScreensFramework.screen1ID);
+    mainContainer.setScreen(ScreensFramework.SCREEN1ID);
     
     Group root = new Group();
     root.getChildren().addAll(mainContainer);
